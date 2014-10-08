@@ -792,55 +792,55 @@ To create an note, simply provide the JSON hash of the note *subject* and *conta
 # Group Orders
 With the Orders endpoints you can search orders  
 
+
 ## Order [/rest/v1/orders/{id}]
 An order is comprised of the following attributes. To reduce the number of API calls you need to make we also return the following embedded resources:
 * contact
 * order_items
 * products
 
-The Order endpoint will return the following resources and attributes:
 
-### order resource
+### `order` resource
 | attribute | type | Description 
 | --- | --- | --- 
-| `id` | number | ```javascript { "id":1 }``` <br> 'True' indicates this was a test transaction. 
-| `title` | string | `{  }` <br> 
-| `status` | string | `{  }` <br> 
-| `recurring` | string | `{  }` <br> 
-| `total` | number | `{  }` <br> 
-| `contact` | embedded object | `{  }` <br> See the Contact resource definition below. 
-| `creation_date` | datetime | `{  }` <br> 
-| `modification_date` | datetime | `{  }` <br> 
-| `lead_affiliate_id` | number | `{  }` <br> 
-| `sales_affiliate_id` | number | `{  }` <br> 
-| `total_paid` | number | `{  }` <br> 
-| `total_due` | datetime | `{  }` <br> 
-| `order_items` | embedded object | `{  }` <br> See the order_items resource representation below.
+| `id` | number | `{ "id": 42 }` <br>  
+| `title` | string | `{ "title":"Email Testing Order (10/9/2013)" }` <br> 
+| `status` | string | `{ "status":"UNPAID" }` <br> 
+| `recurring` | string | `{ "recurring":null }` <br> 
+| `total` | number | `{ "total":500.0 }` <br> 
+| `contact` | embedded object | See the Contact resource definition below. 
+| `creation_date` | datetime | `{ "creation_date":"2013-10-09T16:15:24.000-07:00" }` <br> 
+| `modification_date` | datetime | `{ "modification_date":"2013-12-12T10:30:48.000-07:00" }` <br> 
+| `lead_affiliate_id` | number | `{ "lead_affiliate_id":0 }` <br> 
+| `sales_affiliate_id` | number | `{ "sales_affiliate_id":0 }` <br> 
+| `total_paid` | number | `{ "total_paid":360.0 }` <br> 
+| `total_due` | datetime | `{ "total_due":500.0 }` <br> 
+| `order_items` | embedded object | See the order_items resource representation below.
 
-### order_items resource
-
-| attribute | type | Description 
-| --- | --- | --- 
-| `id` | number | `{  }` <br> 
-| `name` | string | `{  }` <br> 
-| `description` | string | `{  }` <br> 
-| `type` | string | `{  }` <br> 
-| `notes` | string | `{  }` <br> 
-| `quantity` | number | `{  }` <br> 
-| `cost` | number | `{  }` <br>  
-| `price` | number | `{  }` <br> 
-| `discount` | number | `{  }` <br> 
-
-### product resource
+### `order_items` resource
 
 | attribute | type | Description 
 | --- | --- | --- 
-| `id` | number | 
-| `name` | string | 
-| `sku` | string | 
-| `description` | string | 
-| `shippable` | bool | 
-| `taxable` | bool | 
+| `id` | number | `{ "id":1 }` <br> 
+| `name` | string | `{ "name":"Baby Monkey" }` <br> 
+| `description` | string | `{ "description":"" }` <br> 
+| `type` | string | `{ "type":"Product" }` <br> 
+| `notes` | string | `{ "notes":null }` <br> 
+| `quantity` | number | `{ "quantity":1 }` <br> 
+| `cost` | number | `{ "cost":0.0 }` <br>  
+| `price` | number | `{ "price":100.0 }` <br> 
+| `discount` | number | `{ "discount":null }` <br> 
+
+### `product` resource
+
+| attribute | type | Description 
+| --- | --- | --- 
+| `id` | number | ` { "id":1 }` <br>
+| `name` | string | ` { "name":"Baby Monkey" }` <br>
+| `sku` | string | ` { "sku":"" }` <br>
+| `description` | string | ` { "description":"Batteries not included." }` <br>
+| `shippable` | bool | ` { "shippable":false }` <br>
+| `taxable` | bool | ` { "taxable":false }` <br>
 
 + Parameters
     + id (string) ... ID of the Order.
@@ -920,7 +920,7 @@ To retrieve a single order simply submit a request to the order endpoint with th
     [Order][]
 
 
-## Orders Collection [/rest/v1/orders/search{?since,until,limit,offset}]
+## Orders Collection [/rest/v1/orders/search{?since,until,limit,offset,contact_id}]
 The search endpoint returns 3 additional attributes along with an array of notes:
 
 - **count** - The number of notes matching your search parameters
@@ -938,43 +938,65 @@ The search endpoint returns 3 additional attributes along with an array of notes
     + Body
 
             {
-                "orders": [
-                            {
-                                "id": "42",
-                                "title": "Note to self",
-                                "subject": "Call with Mr. Smith went very well.",
-                                "type": "Call",
-                                "creation_date": "2014-07-07T17:58:34.000Z",
-                                "modification_date": "2014-08-07T17:58:34.000Z",
-                                "due_date":"2014-06-17T17:12:52.000Z",
-                                "user_id": 1,
-                                "contact":{
-                                        "id":0,
-                                        "first_name":"John",
-                                        "last_name":"Smith",
-                                        "email":"john.smith@someurl.com"
-                                    }
-                                "url": "https://api.infusionsoft.com/crm/rest/v1/notes/42"
-                            },
-                            {
-                                "id": "42",
-                                "subject": "Note to self",
-                                "details": "Call with Mr. Smith went very well.",
-                                "type": "Call",
-                                "creation_date": "2014-07-07T17:58:34.000Z",
-                                "modification_date": "2014-08-07T17:58:34.000Z",
-                                "due_date":"2014-06-17T17:12:52.000Z",
-                                "user_id": 1,
-                                "contact":{
-                                        "id":0,
-                                        "first_name":"John",
-                                        "last_name":"Smith",
-                                        "email":"john.smith@someurl.com"
-                                    }
-                                "url": "https://api.infusionsoft.com/crm/rest/v1/notes/42"
+                "orders":[
+                {
+                    "id":1,
+                    "title":"Email Testing Order (10/9/2013)",
+                    "status":"UNPAID",
+                    "recurring":null,
+                    "total":500.0,
+                    "contact":{
+                        "id":3,
+                        "email":"victor.miller@infusionsoft.com",
+                        "first_name":"Email",
+                        "last_name":"Testing"
+                        },
+                    "creation_date":"2013-10-09T16:15:24.000-07:00",
+                    "modification_date":"2013-12-12T10:30:48.000-07:00",
+                    "lead_affiliate_id":0,
+                    "sales_affiliate_id":0,
+                    "total_paid":360.0,
+                    "total_due":500.0,
+                    "order_items":[
+                    {
+                        "id":1,
+                        "name":"Baby Monkey",
+                        "description":"",
+                        "type":"Product",
+                        "notes":null,
+                        "quantity":1,
+                        "cost":0.0,
+                        "price":100.0,
+                        "discount":null,
+                        "product":{
+                            "id":1,
+                            "name":"Baby Monkey",
+                            "sku":"",
+                            "description":"",
+                            "shippable":false,
+                            "taxable":false
+                        }
+                    },
+                    {
+                        "id":130,
+                        "name":"Baby Monkey",
+                        "description":"",
+                        "type":"Product",
+                        "notes":"",
+                        "quantity":1,
+                        "cost":0.0,
+                        "price":100.0,
+                        "discount":null,
+                            "product":{
+                                "id":1,
+                                "name":"Baby Monkey",
+                                "sku":"",
+                                "description":"",
+                                "shippable":false,
+                                "taxable":false
                             }
-                ],
-                "count": 2,
+                }],
+                "count": 1,
                 "next": null,
                 "previous": null
             }
@@ -987,6 +1009,7 @@ The Search endpoint returns an array of orders matching the search parameters yo
     + until (optional, dateTime, `2014-08-31T17:00:00.000Z`) ... Upper bound limit for the order expressed as a timestamp in ISO 8601 format: `YYYY-MM-DDTHH:MM:SSZ`.
     + limit (optional, number, `100`) ... Specify the total number of results you would like returned per page. Limit 1,000.
     + offset (optional, number, `100`) ... Specify the number of records to offset the results by for paging.
+    + contact_id (optional, number, `42`) ... Specify the contact_id you would like to retrieve orders for.
 + Response 200
 
     [Orders Collection][] 
