@@ -805,7 +805,7 @@ An order is comprised of the following attributes. To reduce the number of API c
 | `id` | number | `{ "id": 42 }` <br>  
 | `title` | string | `{ "title":"Email Testing Order (10/9/2013)" }` <br> 
 | `status` | string | `{ "status":"UNPAID" }` <br> 
-| `recurring` | string | `{ "recurring":null }` <br> 
+| `recurring` | bool | `{ "recurring":false }` <br> 
 | `total` | number | `{ "total":500.0 }` <br> 
 | `contact` | embedded object | See the Contact resource definition below. 
 | `creation_date` | datetime | `{ "creation_date":"2013-10-09T16:15:24.000-07:00" }` <br> 
@@ -854,7 +854,7 @@ An order is comprised of the following attributes. To reduce the number of API c
             {
                 "orders":[
                 {
-                    "id":1,
+                    "id":188,
                     "title":"Email Testing Order (10/9/2013)",
                     "status":"UNPAID",
                     "recurring":null,
@@ -910,6 +910,7 @@ An order is comprised of the following attributes. To reduce the number of API c
                                 "taxable":false
                             }
                     }]
+                    "url": "https://api.infusionsoft.com/crm/rest/v1/orders/188"
             }
 
 ### Retrieve a Single Order [GET]
@@ -939,10 +940,10 @@ The search endpoint returns 3 additional attributes along with an array of notes
             {
                 "orders":[
                 {
-                    "id":1,
+                    "id":164,
                     "title":"Email Testing Order (10/9/2013)",
                     "status":"UNPAID",
-                    "recurring":null,
+                    "recurring":false,
                     "total":500.0,
                     "contact":{
                         "id":3,
@@ -974,7 +975,7 @@ The search endpoint returns 3 additional attributes along with an array of notes
                             "description":"",
                             "shippable":false,
                             "taxable":false
-                        }
+                        }  
                     },
                     {
                         "id":130,
@@ -994,7 +995,9 @@ The search endpoint returns 3 additional attributes along with an array of notes
                                 "shippable":false,
                                 "taxable":false
                             }
-                }],
+                }]
+                "url": "https://api.infusionsoft.com/crm/rest/v1/orders/164"  
+                ,
                 "count": 1,
                 "next": null,
                 "previous": null
@@ -1025,18 +1028,19 @@ The Transaction endpoint will return the following resources and attributes:
 
 | attribute | type | Description 
 | --- | --- | --- 
-| `test` | bool | 'True' indicates this was a test transaction. 
-| `amount` | double | The total transaction amount. 
-| `currency` | string |  Currency of the transaction, USD
-| `gateway` | string |  Payment gateway used for the transaction.
-| `type` | string | The date that the note was created. 
-| `status` | string | The date that the note was modified. 
-| `errors` | double | The user id to whom the note is asssigned. 
-| `contact_id` | int | The id of the contact associated with this transaction. 
-| `transaction_date` | date |  The date that the transaction took place expressed in iso-8601 datetime. Ex: `2013-10-24T14:03:46.000-07:00`
-| `gateway_account_name` | string |  This is the name you gave the payment gateway in Infusionsoft.
-| `order_ids` | string |  A comma delimited list of order ids associated with this transaction. 
-| `collection_method` | string |  Defines whether this transaction was processed via *credit card, Pay Pal or Manually*
+| `id` | number | `{ "id":12 }` <br>
+| `test` | bool | `{ "test":false }` <br> 'True' indicates this was a test transaction. 
+| `amount` | double | `{ "amount":100.0 }` <br> The total transaction amount. 
+| `currency` | string |  `{ "currency":"USD" }` <br> Currency of the transaction, USD
+| `gateway` | string |  `{ "gateway":"AUTHORIZE" }` <br> Payment gateway used for the transaction.
+| `type` | string | `{ "type":"CAPTURE" }` <br> The date that the note was created. 
+| `status` | string | `{ "status":"Successful Transaction" }` <br> The date that the note was modified. 
+| `errors` | double | `{ "errors":null }` <br> The user id to whom the note is asssigned. 
+| `contact_id` | int | `{ "id":133 }` <br> The id of the contact associated with this transaction. 
+| `transaction_date` | date | `{ "transaction_date":"2013-10-24T14:03:46.000-07:00" }` <br> The date that the transaction took place expressed in iso-8601 datetime. Ex: `2013-10-24T14:03:46.000-07:00`
+| `gateway_account_name` | string | `{ "gateway_account_name":"Authorize" }` <br> This is the name you gave the payment gateway in Infusionsoft.
+| `order_ids` | string | `{ "order_ids":"6,3" }` <br> A comma delimited list of order ids associated with this transaction. 
+| `collection_method` | string | `{ "collection_method":"CollectionMethod" }` <br> Defines whether this transaction was processed via *credit card, Pay Pal or Manually*
 
 
 
@@ -1053,6 +1057,7 @@ The Transaction endpoint will return the following resources and attributes:
             {
                 "transactions": [
                             {
+                                "id":22
                                 "test":false,
                                 "amount":100.0,
                                 "currency":"USD",
@@ -1097,6 +1102,7 @@ The search endpoint returns 3 additional attributes along with an array of trans
             {
                 "transactions": [
                             {
+                                "id":22,
                                 "test":false,
                                 "amount":100.0,
                                 "currency":"USD",
@@ -1112,6 +1118,7 @@ The search endpoint returns 3 additional attributes along with an array of trans
                                 "url": "https://api.infusionsoft.com/crm/rest/v1/transactions/42"
                             },
                             {
+                                "id":98
                                 "test":false,
                                 "amount":500.0,
                                 "currency":"USD",
