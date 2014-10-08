@@ -793,56 +793,54 @@ To create an note, simply provide the JSON hash of the note *subject* and *conta
 With the Orders endpoints you can search orders  
 
 ## Order [/rest/v1/orders/{id}]
-A single Order object. 
+An order is comprised of the following attributes. To reduce the number of API calls you need to make we also return the following embedded resources:
+* contact
+* order_items
+* products
 
 The Order endpoint will return the following resources and attributes:
 
+### order resource
 | attribute | type | Description 
 | --- | --- | --- 
-| `id` | bool | 'True' indicates this was a test transaction. 
-| `title` | string | 
-| `status` | string | 
-| `recurring` | string | 
-| `total` | string | 
-| `contact` | embedded object | Contact attributes are: <br> * contact_id * first_name * last_name * email
-| `creation_date` | string | 
-| `modification_date` | string | 
-| `lead_affiliate_id` | string | 
-| `sales_affiliate_id` | string | 
-| `total_paid` | string | 
-| `total_due` | string | 
+| `id` | number | `{ "id":1 }` <br> 'True' indicates this was a test transaction. 
+| `title` | string | `{  }` <br> 
+| `status` | string | `{  }` <br> 
+| `recurring` | string | `{  }` <br> 
+| `total` | number | `{  }` <br> 
+| `contact` | embedded object | `{  }` <br> See the Contact resource definition below. 
+| `creation_date` | datetime | `{  }` <br> 
+| `modification_date` | datetime | `{  }` <br> 
+| `lead_affiliate_id` | number | `{  }` <br> 
+| `sales_affiliate_id` | number | `{  }` <br> 
+| `total_paid` | number | `{  }` <br> 
+| `total_due` | datetime | `{  }` <br> 
+| `order_items` | embedded object | `{  }` <br> See the order_items resource representation below.
 
+### order_items resource
 
-Order
-- id
-- title
-- type
-- creation_date
-- modification_date
-- lead_affiliate_id
-- sales_affiliate_id
-- recurring
-- total
-- total_paid
-- total_due
+| attribute | type | Description 
+| --- | --- | --- 
+| `id` | number | `{  }` <br> 
+| `name` | string | `{  }` <br> 
+| `description` | string | `{  }` <br> 
+| `type` | string | `{  }` <br> 
+| `notes` | string | `{  }` <br> 
+| `quantity` | number | `{  }` <br> 
+| `cost` | number | `{  }` <br>  
+| `price` | number | `{  }` <br> 
+| `discount` | number | `{  }` <br> 
 
-Order Items
-- id
-- description
-- name
-- type
-- notes
-- quantitity
-- cost
-- price
+### product resource
 
-Contact 
-- id
-- first_name
-- last_name
-- email
-
-
+| attribute | type | Description 
+| --- | --- | --- 
+| `id` | number | 
+| `name` | string | 
+| `sku` | string | 
+| `description` | string | 
+| `shippable` | bool | 
+| `taxable` | bool | 
 
 + Parameters
     + id (string) ... ID of the Order.
@@ -853,36 +851,66 @@ Contact
 
 
     + Body
-
+            
             {
-                "id": "42",
-                "title": "Some Title",
-                "status": "Paid",
-                "recurring": "false",
-                "creation_date": "2014-07-07T17:58:34.000Z",
-                "modification_date": "2014-08-07T17:58:34.000Z",
-                "lead_affiliate_id":"3431",
-                "sales_affiliate_id":"232",
-                "total":20.00,
-                "total_paid":10.00,
-                "total_due":2.00
-                "order_item":{
-                    "id":0,
-                    "description":"Chicken",
-                    "name":"Order Name",
-                    "type":"Product",
-                    "notes":"Some notes",
-                    "quantity":3,
-                    "cost":19.00,
-                    "unit_price":20.00,
-                    "discount":1.00
-                "contact":{
-                    "id":0,
-                    "first_name":"John",
-                    "last_name":"Smith",
-                    "email":"john.smith@someurl.com"
-                    }
-                "url": "https://api.infusionsoft.com/crm/rest/v1/orders/42"
+                "orders":[
+                {
+                    "id":1,
+                    "title":"Email Testing Order (10/9/2013)",
+                    "status":"UNPAID",
+                    "recurring":null,
+                    "total":500.0,
+                    "contact":{
+                        "id":3,
+                        "email":"victor.miller@infusionsoft.com",
+                        "first_name":"Email",
+                        "last_name":"Testing"
+                        },
+                    "creation_date":"2013-10-09T16:15:24.000-07:00",
+                    "modification_date":"2013-12-12T10:30:48.000-07:00",
+                    "lead_affiliate_id":0,
+                    "sales_affiliate_id":0,
+                    "total_paid":360.0,
+                    "total_due":500.0,
+                    "order_items":[
+                    {
+                        "id":1,
+                        "name":"Baby Monkey",
+                        "description":"",
+                        "type":"Product",
+                        "notes":null,
+                        "quantity":1,
+                        "cost":0.0,
+                        "price":100.0,
+                        "discount":null,
+                        "product":{
+                            "id":1,
+                            "name":"Baby Monkey",
+                            "sku":"",
+                            "description":"",
+                            "shippable":false,
+                            "taxable":false
+                        }
+                    },
+                    {
+                        "id":130,
+                        "name":"Baby Monkey",
+                        "description":"",
+                        "type":"Product",
+                        "notes":"",
+                        "quantity":1,
+                        "cost":0.0,
+                        "price":100.0,
+                        "discount":null,
+                            "product":{
+                                "id":1,
+                                "name":"Baby Monkey",
+                                "sku":"",
+                                "description":"",
+                                "shippable":false,
+                                "taxable":false
+                            }
+                    }]
             }
 
 ### Retrieve a Single Order [GET]
