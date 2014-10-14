@@ -852,66 +852,64 @@ An order is comprised of the following attributes. To reduce the number of API c
     + Body
             
             {
-                "orders": {
-                    "id": 1288,
-                    "title": "Email Testing Order (10/9/2013)",
-                    "status": "UNPAID",
-                    "recurring": null,
-                    "total": 500,
-                    "contact": {
-                        "id": 3,
-                        "email": "victor.miller@infusionsoft.com",
-                        "first_name": "Email",
-                        "last_name": "Testing"
-                    },
-                    "creation_date": "2013-10-09T16:15:24.000-07:00",
-                    "modification_date": "2013-12-12T10:30:48.000-07:00",
-                    "lead_affiliate_id": 0,
-                    "sales_affiliate_id": 0,
-                    "total_paid": 360,
-                    "total_due": 500,
-                    "order_items": [
-                        {
-                            "id": 31,
+                "id": 1288,
+                "title": "Email Testing Order (10/9/2013)",
+                "status": "UNPAID",
+                "recurring": null,
+                "total": 500,
+                "contact": {
+                    "id": 3,
+                    "email": "victor.miller@infusionsoft.com",
+                    "first_name": "Email",
+                    "last_name": "Testing"
+                },
+                "creation_date": "2013-10-09T16:15:24.000-07:00",
+                "modification_date": "2013-12-12T10:30:48.000-07:00",
+                "lead_affiliate_id": 0,
+                "sales_affiliate_id": 0,
+                "total_paid": 360,
+                "total_due": 500,
+                "order_items": [
+                    {
+                        "id": 31,
+                        "name": "Howling Monkey",
+                        "description": "",
+                        "type": "Product",
+                        "notes": null,
+                        "quantity": 1,
+                        "cost": 0,
+                        "price": 100,
+                        "discount": null,
+                        "product": {
+                            "id": 1,
                             "name": "Howling Monkey",
+                            "sku": "",
                             "description": "",
-                            "type": "Product",
-                            "notes": null,
-                            "quantity": 1,
-                            "cost": 0,
-                            "price": 100,
-                            "discount": null,
-                            "product": {
-                                "id": 1,
-                                "name": "Howling Monkey",
-                                "sku": "",
-                                "description": "",
-                                "shippable": false,
-                                "taxable": false
-                            }
-                        },
-                        {
-                            "id": 5130,
-                            "name": "Baby Monkey",
-                            "description": "",
-                            "type": "Product",
-                            "notes": "",
-                            "quantity": 1,
-                            "cost": 0,
-                            "price": 100,
-                            "discount": null,
-                            "product": {
-                                "id": 1,
-                                "name": "Baby Monkey",
-                                "sku": "",
-                                "description": "",
-                                "shippable": false,
-                                "taxable": false
-                            }
+                            "shippable": false,
+                            "taxable": false
                         }
-                    ],
-                    "url": "https://api.infusionsoft.com/crm/rest/v1/orders/1288"
-                }
+                    },
+                    {
+                        "id": 5130,
+                        "name": "Baby Monkey",
+                        "description": "",
+                        "type": "Product",
+                        "notes": "",
+                        "quantity": 1,
+                        "cost": 0,
+                        "price": 100,
+                        "discount": null,
+                        "product": {
+                            "id": 1,
+                            "name": "Baby Monkey",
+                            "sku": "",
+                            "description": "",
+                            "shippable": false,
+                            "taxable": false
+                        }
+                    }
+                ],
+                "url": "https://api.infusionsoft.com/crm/rest/v1/orders/1288"
             }
 
 ### Retrieve a Single Order [GET]
@@ -1119,23 +1117,20 @@ The Transaction endpoint will return the following resources and attributes:
     + Body
     
             {
-                "transactions": 
-                            {
-                                "id":22
-                                "test":false,
-                                "amount":100.0,
-                                "currency":"USD",
-                                "gateway":"AUTHORIZE",
-                                "type":"CAPTURE",
-                                "status":"Successful Transaction",
-                                "errors":null,
-                                "contact_id":9,
-                                "transaction_date":"2013-10-24T14:03:46.000-07:00",
-                                "gateway_account_name":"Authorize",
-                                "order_ids":"6",
-                                "collection_method":"Credit Card"
-                                "url": "https://api.infusionsoft.com/crm/rest/v1/transactions/42"
-                            }
+                "id":22
+                "test":false,
+                "amount":100.0,
+                "currency":"USD",
+                "gateway":"AUTHORIZE",
+                "type":"CAPTURE",
+                "status":"Successful Transaction",
+                "errors":null,
+                "contact_id":9,
+                "transaction_date":"2013-10-24T14:03:46.000-07:00",
+                "gateway_account_name":"Authorize",
+                "order_ids":"6",
+                "collection_method":"Credit Card"
+                "url": "https://api.infusionsoft.com/crm/rest/v1/transactions/42"
             }
 
 ### Retrieve a Single Transaction [GET]
