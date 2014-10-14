@@ -1928,3 +1928,65 @@ Returns all Valid Notification Types
             {"name": "SYSTEM", "description": "System Notifications"},
             {"name": "TICKET", "description": "Support Ticket Updates"}
         ]
+
+
+# Group Channel Management
+The Channel Management Service provides endpoints into the Sync Engine where new channels are registered/de-registered to/from being kept up to date(synched) and providing status channel types or individual channels.
+
+## Channel [/rest/v1/channels]
+These may need to change considering start_date and end_date may not make sense for web-hooks, streams or services that use sync tokens.
+
+- id
+- name
+- credentials
+- start_date
+- end_date
+- destination_queue
+
++ Model (application/json)
+
+    JSON representation of a Channel.
+    
+    + Body
+        
+            {
+                "name":"twitter", 
+                "credentials":{
+                ...
+                }
+                "start_date":"2014-06-17T17:12:52.000Z",
+                "end_date":"2014-06-17T17:12:52.000Z",
+                "destination_queue":"aws-thingy29083"
+            }
+
+## Channel Start [/rest/v1/channels/start]
+### Start synching this channel [POST]
+
++ Request (application/json)
+
+            {
+                "id":"458978gh8",
+                "name":"twitter", 
+                "credentials":{
+                ...
+                }
+                "start_date":"2014-06-17T17:12:52.000Z",
+                "end_date":"2014-06-17T17:12:52.000Z",
+                "destination_queue":"aws-thingy29083"
+            }
+            
++ Response 201 (application/json)
+
+    [Channel][]
+
+## Channel Stop [/rest/v1/channels/stop{?id}]
+
+- **id** - the unique identifier of this channel provided when starting the sync.
+
+### Stop synching this channel [GET]
+
++ Parameters
+    + id (required, string, `3898c3j388`) ... identifier provided when starting sync.
++ Response 200
+
+
