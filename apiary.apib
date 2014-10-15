@@ -1951,7 +1951,25 @@ These may need to change considering start_date and end_date may not make sense 
             }
 
 
+### Register a new channel [POST]
 
++ Request (application/json)
+
+    [Channel][]
+    
++ Response 201 (application/json)
+
+    [Channel][]
+    
+    
+## Channel Delete [/rest/v1/channels/{?id}]
+Un-register this channel.
+
+- **id** - the unique identifier of this channel (provided when first regestering).
+
+### Stop synching this account on this channel [DELETE]
+
++ Response 201
 
 
 ## Channel Account [/rest/v1/channels/{id}/accounts/]
@@ -2000,9 +2018,9 @@ These may need to change considering start_date and end_date may not make sense 
 ## Channel Account Delete [/rest/v1/channels/{id}/accounts/{?id}]
 Stop syncing this account on this channel.
 
-- **id** - the unique identifier of this channel provided when starting the sync.
+- **id** - the unique identifier of this account on this channel provided when starting the sync.
 
-### Stop synching this channel [DELETE]
+### Stop synching this account on this channel [DELETE]
 
 + Response 201
 
