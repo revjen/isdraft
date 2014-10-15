@@ -1931,11 +1931,11 @@ Returns all Valid Notification Types
 
 
 # Group Channel Management
-The Channel Management Service provides endpoints into the Sync Engine where new channels are registered/de-registered and accounts on those channels are maintained. 
-Statuses of particualar channel-accounts can be acquired, and maybe summaries of all the channels and their overall status.
+The Channel Management Service provides endpoints into the Sync Engine where new channels are registered/de-registered. and subscriptions on those channels are maintained. 
+Statuses of particualar channel-subscriptions can be acquired, and maybe summaries of all the channels and thier overall status.
 
 ## Channel [/rest/v1/channels]
-A Channel represents the source of information, such as e-mail, twitter, facebook or shopify.
+A Channel represents source of information, such as e-mail, twitter, facebook or shopify.
 
 - id
 - name
@@ -1956,19 +1956,29 @@ A Channel represents the source of information, such as e-mail, twitter, faceboo
 
 + Request (application/json)
 
-            {
-                "name":"twitter" 
-            }
+    [Channel][]
     
 + Response 201 (application/json)
 
     [Channel][]
     
-### List all Channels [GET]
-The channels GET endpoint returns an list of all registered channels (and maybe their states, and number of activley synced accounts)
+    
+## Channel Delete [/rest/v1/channels/{?id}]
+Un-register this channel.
 
-+ Response 200
+- **id** - the unique identifier of this channel (provided when first regestering).
 
+### Stop synching this account on this channel [DELETE]
+
++ Response 201
+
+## Channel List [/rest/v1/channels/list]
+The list endpoint returns an list of all registered channels (and maybe their states, and number of activley synced subscriptions)
+
++ Model (application/json)
+
+    + Body
+    
             {
                 "channels": [
                     {
@@ -1981,18 +1991,14 @@ The channels GET endpoint returns an list of all registered channels (and maybe 
                     }
                 ]
             }
-    
-    
-## Channel Delete [/rest/v1/channels/{?id}]
-Stop synching with the channel.
 
-- **id** - the unique identifier of this channel (returned when first registering).
+### List all Channels [GET]
 
-### Un-register this channel [DELETE]
++ Response 200
 
-+ Response 204
+    [Channel List][] 
 
-## Channel Account [/rest/v1/channels/{id}/accounts/]
+## Channel Subscription [/rest/v1/channels/{id}/subscriptions/]
 
 - id
 - name
@@ -2015,7 +2021,7 @@ Stop synching with the channel.
                 "destination_queue":"aws-thingy29083"
             }
 
-### Start synching this channel account [POST]
+### Start synching this channel subscription [POST]
 
 + Request (application/json)
 
@@ -2033,24 +2039,22 @@ Stop synching with the channel.
             
 + Response 201 (application/json)
 
-    [Channel Account][]
+    [Channel Subscription][]
 
-## Channel Account Delete [/rest/v1/channels/{channel_id}/accounts/{?account_id}]
-Stop syncing this account on this channel.
+## Channel Account Delete [/rest/v1/channels/{id}/subscriptions/{?id}]
+Stop syncing this subscription on this channel.
 
-- **channel_id** - the unique identifier of this channel returned when starting the sync.
-- **account_id** - the unique identifier of the account on this channel.
+- **id** - the unique identifier of this subscription on this channel provided when starting the sync.
 
+### Stop synching this subscription on this channel [DELETE]
 
-### Stop synching this channel account [DELETE]
++ Response 201
 
-+ Response 204
-
-## Channel Account Status [/rest/v1/channels/{id}/accounts/{id}/status]
+## Channel Subscription Status [/rest/v1/channels/{id}/subscriptions/{id}/status]
 
 + Model (application/json)
 
-    JSON representation of a Channel Account Status.
+    JSON representation of a Task Resource.
 
     + Body
             
@@ -2058,8 +2062,8 @@ Stop syncing this account on this channel.
                 "status_message":"something crapped out somehow"
             }
 
-### Retrieve the status for this channel account [GET]
+### Retrieve the status for this channel subscription [GET]
  
 + Response 200
 
-    [Channel Account Status][]
+    [Channel Subscription Status][]
