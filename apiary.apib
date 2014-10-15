@@ -1956,7 +1956,9 @@ A Channel represents source of information, such as e-mail, twitter, facebook or
 
 + Request (application/json)
 
-    [Channel][]
+            {
+                "name":"twitter" 
+            }
     
 + Response 201 (application/json)
 
@@ -1964,11 +1966,11 @@ A Channel represents source of information, such as e-mail, twitter, facebook or
     
     
 ## Channel Delete [/rest/v1/channels/{?id}]
-Un-register this channel.
+Stop synching with the channel.
 
 - **id** - the unique identifier of this channel (provided when first regestering).
 
-### Stop synching this account on this channel [DELETE]
+### Un-register this channel [DELETE]
 
 + Response 201
 
@@ -2041,14 +2043,16 @@ The list endpoint returns an list of all registered channels (and maybe their st
 
     [Channel Account][]
 
-## Channel Account Delete [/rest/v1/channels/{id}/accounts/{?id}]
+## Channel Account Delete [/rest/v1/channels/{channel_id}/accounts/{?account_id}]
 Stop syncing this account on this channel.
 
-- **id** - the unique identifier of this account on this channel provided when starting the sync.
+- **channel_id** - the unique identifier of this channel provided when starting the sync.
+- **account_id** - the unique identifier of the account on this channel.
 
-### Stop synching this account on this channel [DELETE]
 
-+ Response 201
+### Stop synching this channel account [DELETE]
+
++ Response 204
 
 ## Channel Account Status [/rest/v1/channels/{id}/accounts/{id}/status]
 
