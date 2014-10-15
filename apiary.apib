@@ -2050,3 +2050,20 @@ Stop syncing this account on this channel.
 
 + Response 201
 
+## Channel Account Status [/rest/v1/channels/{id}/accounts/{id}/status]
+
++ Model (application/json)
+
+    JSON representation of a Task Resource.
+
+    + Body
+            
+            {
+                "status_message":"something crapped out somehow"
+            }
+
+### Retrieve the status for this channel account [GET]
+ 
++ Response 200
+
+    [Channel Account Status][]
