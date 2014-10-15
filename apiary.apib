@@ -1972,6 +1972,31 @@ Un-register this channel.
 
 + Response 201
 
+## Channel List [/rest/v1/channels/list]
+The list endpoint returns an list of all registered channels (and maybe their states, and number of activley synced accounts)
+
++ Model (application/json)
+
+    + Body
+    
+            {
+                "channels": [
+                    {
+                        "id":"1237f898d",
+                        "name":"twitter" 
+                    },
+                    {
+                        "id":"0921f8cfg",
+                        "name":"theface" 
+                    }
+                ]
+            }
+
+### List all Channels [GET]
+
++ Response 200
+
+    [Channel List][] 
 
 ## Channel Account [/rest/v1/channels/{id}/accounts/]
 
