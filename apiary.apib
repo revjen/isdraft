@@ -1938,10 +1938,6 @@ These may need to change considering start_date and end_date may not make sense 
 
 - id
 - name
-- credentials
-- start_date
-- end_date
-- destination_queue
 
 + Model (application/json)
 
@@ -1950,43 +1946,63 @@ These may need to change considering start_date and end_date may not make sense 
     + Body
         
             {
-                "name":"twitter", 
+                "id":"1237f898d",
+                "name":"twitter" 
+            }
+
+
+
+
+
+## Channel Account [/rest/v1/channels/{id}/accounts/]
+
+- id
+- name
+- credentials
+- sync_data
+- destination_queue
+
+
++ Model (application/json)
+
+            {
+                "id":"458978gh8",
                 "credentials":{
                 ...
-                }
-                "start_date":"2014-06-17T17:12:52.000Z",
-                "end_date":"2014-06-17T17:12:52.000Z",
+                },
+                "sync_data":{
+                    "start_date":"2014-06-17T17:12:52.000Z",
+                    "end_date":"2014-06-17T17:12:52.000Z"
+                },
                 "destination_queue":"aws-thingy29083"
             }
 
-## Channel Start [/rest/v1/channels/start]
-### Start synching this channel [POST]
+### Start synching this channel account [POST]
 
 + Request (application/json)
 
             {
                 "id":"458978gh8",
-                "name":"twitter", 
                 "credentials":{
                 ...
-                }
-                "start_date":"2014-06-17T17:12:52.000Z",
-                "end_date":"2014-06-17T17:12:52.000Z",
+                },
+                "sync_data":{
+                    "start_date":"2014-06-17T17:12:52.000Z",
+                    "end_date":"2014-06-17T17:12:52.000Z"
+                },
                 "destination_queue":"aws-thingy29083"
             }
             
 + Response 201 (application/json)
 
-    [Channel][]
+    [Channel Account][]
 
-## Channel Stop [/rest/v1/channels/stop{?id}]
+## Channel Account Delete [/rest/v1/channels/{id}/accounts/{?id}]
+Stop syncing this account on this channel.
 
 - **id** - the unique identifier of this channel provided when starting the sync.
 
-### Stop synching this channel [GET]
+### Stop synching this channel [DELETE]
 
-+ Parameters
-    + id (required, string, `3898c3j388`) ... identifier provided when starting sync.
-+ Response 200
-
++ Response 201
 
