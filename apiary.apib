@@ -1935,7 +1935,7 @@ The Channel Management Service provides endpoints into the Sync Engine where new
 Statuses of particualar channel-accounts can be acquired, and maybe summaries of all the channels and their overall status.
 
 ## Channel [/rest/v1/channels]
-A Channel represents source of information, such as e-mail, twitter, facebook or shopify.
+A Channel represents the source of information, such as e-mail, twitter, facebook or shopify.
 
 - id
 - name
@@ -1964,23 +1964,11 @@ A Channel represents source of information, such as e-mail, twitter, facebook or
 
     [Channel][]
     
-    
-## Channel Delete [/rest/v1/channels/{?id}]
-Stop synching with the channel.
+### List all Channels [GET]
+The channels GET endpoint returns an list of all registered channels (and maybe their states, and number of activley synced accounts)
 
-- **id** - the unique identifier of this channel (provided when first regestering).
++ Response 200
 
-### Un-register this channel [DELETE]
-
-+ Response 201
-
-## Channel List [/rest/v1/channels/list]
-The list endpoint returns an list of all registered channels (and maybe their states, and number of activley synced accounts)
-
-+ Model (application/json)
-
-    + Body
-    
             {
                 "channels": [
                     {
@@ -1993,12 +1981,16 @@ The list endpoint returns an list of all registered channels (and maybe their st
                     }
                 ]
             }
+    
+    
+## Channel Delete [/rest/v1/channels/{?id}]
+Stop synching with the channel.
 
-### List all Channels [GET]
+- **id** - the unique identifier of this channel (returned when first registering).
 
-+ Response 200
+### Un-register this channel [DELETE]
 
-    [Channel List][] 
++ Response 201
 
 ## Channel Account [/rest/v1/channels/{id}/accounts/]
 
