@@ -1998,27 +1998,19 @@ The list endpoint returns an list of all registered channels (and maybe their st
 
     [Channel List][] 
 
-## Channel Subscription [/rest/v1/channels/{id}/subscriptions/]
+## Channel Subscription [/rest/v1/channel_subscriptions/]
 
 - id
-- name
-- credentials
-- sync_data
-- destination_queue
+- channel_name
+- credentials_id
 
 
 + Model (application/json)
 
             {
                 "id":"458978gh8",
-                "credentials":{
-                ...
-                },
-                "sync_data":{
-                    "start_date":"2014-06-17T17:12:52.000Z",
-                    "end_date":"2014-06-17T17:12:52.000Z"
-                },
-                "destination_queue":"aws-thingy29083"
+                "channel_name":"twitter",
+                "credentials_id":"458234kjsh8"
             }
 
 ### Start synching this channel subscription [POST]
@@ -2026,31 +2018,24 @@ The list endpoint returns an list of all registered channels (and maybe their st
 + Request (application/json)
 
             {
-                "id":"458978gh8",
-                "credentials":{
-                ...
-                },
-                "sync_data":{
-                    "start_date":"2014-06-17T17:12:52.000Z",
-                    "end_date":"2014-06-17T17:12:52.000Z"
-                },
-                "destination_queue":"aws-thingy29083"
+                "channel_name":"twitter",
+                "credentials_id":"458234kjsh8"
             }
             
 + Response 201 (application/json)
 
     [Channel Subscription][]
 
-## Channel Account Delete [/rest/v1/channels/{id}/subscriptions/{?id}]
+## Channel Account Delete [/rest/v1/channel_subscriptions/{?id}]
 Stop syncing this subscription on this channel.
 
 - **id** - the unique identifier of this subscription on this channel provided when starting the sync.
 
 ### Stop synching this subscription on this channel [DELETE]
 
-+ Response 201
++ Response 204
 
-## Channel Subscription Status [/rest/v1/channels/{id}/subscriptions/{id}/status]
+## Channel Subscription List [/rest/v1/channel_subscriptions/]
 
 + Model (application/json)
 
@@ -2059,11 +2044,17 @@ Stop syncing this subscription on this channel.
     + Body
             
             {
-                "status_message":"something crapped out somehow"
+                "channel_subscriptions":[
+                    {
+                        "id":"458978gh8",
+                        "channel_name":"twitter",
+                        "credentials_id":"458234kjsh8"
+                    }
+                ]
             }
 
 ### Retrieve the status for this channel subscription [GET]
  
 + Response 200
 
-    [Channel Subscription Status][]
+    [Channel Subscription List][]
