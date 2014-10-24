@@ -1963,13 +1963,15 @@ A Channel represents source of information, such as e-mail, twitter, facebook or
     [Channel][]
     
     
-## Channel Delete [/rest/v1/channels/{?id}]
+## Channel Delete [/rest/v1/channels/]
 Un-register this channel.
-
-- **id** - the unique identifier of this channel (provided when first regestering).
 
 ### Stop synching this account on this channel [DELETE]
 
++ Request (application/json)
+
+    [Channel][]
+    
 + Response 201
 
 ## Channel List [/rest/v1/channels/list]
