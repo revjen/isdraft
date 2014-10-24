@@ -1947,8 +1947,8 @@ A Channel represents source of information, such as e-mail, twitter, facebook or
     + Body
         
             {
-                "id":"1237f898d",
-                "name":"twitter" 
+                "name":"twitter",
+                "type":"PERIODIC"
             }
 
 
@@ -1982,12 +1982,12 @@ The list endpoint returns an list of all registered channels (and maybe their st
             {
                 "channels": [
                     {
-                        "id":"1237f898d",
-                        "name":"twitter" 
+                        "name":"twitter",
+                        "type":"PERIODIC"
                     },
                     {
-                        "id":"0921f8cfg",
-                        "name":"theface" 
+                        "name":"theface",
+                        "type":"STREAMING"
                     }
                 ]
             }
@@ -2009,7 +2009,10 @@ The list endpoint returns an list of all registered channels (and maybe their st
 
             {
                 "id":"458978gh8",
-                "channel_name":"twitter",
+                "channel":{
+                    "name":"twitter",
+                    "type":"PERIODIC"
+                },
                 "credentials_id":"458234kjsh8"
             }
 
@@ -2018,7 +2021,10 @@ The list endpoint returns an list of all registered channels (and maybe their st
 + Request (application/json)
 
             {
-                "channel_name":"twitter",
+                "channel":{
+                    "name":"twitter",
+                    "type":"PERIODIC"
+                },
                 "credentials_id":"458234kjsh8"
             }
             
@@ -2047,7 +2053,10 @@ Stop syncing this subscription on this channel.
                 "channel_subscriptions":[
                     {
                         "id":"458978gh8",
-                        "channel_name":"twitter",
+                        "channel":{
+                            "name":"twitter",
+                            "type":"PERIODIC"
+                        },
                         "credentials_id":"458234kjsh8"
                     }
                 ]
