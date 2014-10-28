@@ -1937,8 +1937,10 @@ Statuses of particualar channel-subscriptions can be acquired, and maybe summari
 ## Channel [/rest/v1/channels]
 A Channel represents source of information, such as e-mail, twitter, facebook or shopify.
 
-- id
-- name
+- **id**
+- **name**
+- **load_script** - (String) java script code to perform loading raw data from the channel.
+- **transform_script** - (String) java script code to transform a unit of raw data into the IS cannonical form.
 
 + Model (application/json)
 
@@ -1949,6 +1951,8 @@ A Channel represents source of information, such as e-mail, twitter, facebook or
             {
                 "name":"twitter",
                 "type":"PERIODIC"
+                "load_script":"do stuff while true; but don't core or anything;",
+                "transform_script":"take this-data, and spit out the cannonical form; also try not to cause a heap or stack overflow;"
             }
 
 
@@ -1985,11 +1989,15 @@ The list endpoint returns an list of all registered channels (and maybe their st
                 "channels": [
                     {
                         "name":"twitter",
-                        "type":"PERIODIC"
+                        "type":"PERIODIC",
+                        "load_script":"do stuff while true; but don't core or anything;",
+                        "transform_script":"take this-data, and spit out the cannonical form; also try not to cause a heap or stack overflow;"
                     },
                     {
                         "name":"theface",
-                        "type":"STREAMING"
+                        "type":"STREAMING",
+                        "load_script":"do stuff while true; but don't core or anything;",
+                        "transform_script":"take this-data, and spit out the cannonical form; also try not to cause a heap or stack overflow;"
                     }
                 ]
             }
