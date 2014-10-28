@@ -2023,7 +2023,10 @@ The list endpoint returns an list of all registered channels (and maybe their st
                     "name":"twitter",
                     "type":"PERIODIC"
                 },
-                "credentials_id":"458234kjsh8"
+                "credentials_id":"458234kjsh8",
+                "execution": {
+                    "start_date": "2012-11-11T11:11:11.111Z"
+                }
             }
 
 ### Start synching this channel subscription [POST]
@@ -2080,41 +2083,23 @@ Stop syncing this subscription on this channel.
 
     
     
-# Group Channel History
+# Group Channel Consumption
 
-The Channel History Service provides endpoints for the Sync Engine to store/track current state of all subscriptions.
+The Channel Consumption Service provides endpoints for the Sync Engine to get a channel subscription for consumption and update for consumption completion.
 
-## Resource Channel History [/channel_history]
+## Resource Channel Subscription [/channel_subscription]
 
-### Channel History [/rest/v1/channel_history/{?id}]
+### Channel Subscription [/rest/v1/channel_subscription/next]
 
-A Channel History resource will contain the following attributes:
+A Channel Subscription resource will contain the following attributes:
 
 | attribute | type | Description |
 | --- | --- | --- |
-| `placeholder` | string | placeholder |
-| `placeholder` | string | placeholder |
-| `placeholder` | nested resource | placeholder |
-| `placeholder` | string | placeholder |
+| `id` | string | a unique identifier for the channel subscription |
+| `channel` | nested resource | a nested resource with name and type to describe the channel for the given subscription |
+| `credentials_id` | string | a unique identifier for the credentials of the channel subscription |
+| `execution` | nested resource | a nested resource with the attributes necessary to pull a specific range for the given channel subscription |
 
-
-+ Model (application/json)
-
-    JSON representation of a channel history resource.
-
-    + Body
-
-            {
-                "type":"Emergency",
-                "message":"test",
-                "notification_target":{
-                    "cas_global_id":21,
-                    "infusionsoft_app_id":"a56"
-                },
-                "date":"2014-09-18T18:40:08.120Z",
-                "id":"36d023c0-3f63-11e4-9db5-07108d192dc8",
-                "read_date":"2014-09-18T18:40:18.893Z"
-            }
 
 ### Update Execution [POST] 
 Stores the information needed for the next Date Range subscription execution.
@@ -2137,7 +2122,7 @@ Stores the information needed for the next Date Range subscription execution.
 
 + Response 200
 
-    [Channel History][]
+    [Channel Subscription][]
 
 + Response 500
 
@@ -2155,7 +2140,7 @@ The notifications endpoint returns an array of notifications for the authenticat
 
 + Response 200
 
-    [Channel History][]
+    [Channel Subscription][]
 
 + Response 400
 
