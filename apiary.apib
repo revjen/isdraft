@@ -2077,3 +2077,88 @@ Stop syncing this subscription on this channel.
 + Response 200
 
     [Channel Subscription List][]
+
+    
+    
+# Group Channel History
+
+The Channel History Service provides endpoints for the Sync Engine to store/track current state of all subscriptions.
+
+## Resource Channel History [/channel_history]
+
+### Channel History [/rest/v1/channel_history/{?id}]
+
+A Channel History resource will contain the following attributes:
+
+| attribute | type | Description |
+| --- | --- | --- |
+| `placeholder` | string | placeholder |
+| `placeholder` | string | placeholder |
+| `placeholder` | nested resource | placeholder |
+| `placeholder` | string | placeholder |
+
+
++ Model (application/json)
+
+    JSON representation of a channel history resource.
+
+    + Body
+
+            {
+                "type":"Emergency",
+                "message":"test",
+                "notification_target":{
+                    "cas_global_id":21,
+                    "infusionsoft_app_id":"a56"
+                },
+                "date":"2014-09-18T18:40:08.120Z",
+                "id":"36d023c0-3f63-11e4-9db5-07108d192dc8",
+                "read_date":"2014-09-18T18:40:18.893Z"
+            }
+
+### Update Execution [POST] 
+Stores the information needed for the next Date Range subscription execution.
+
++ Request (application/json)
+
+        {
+            "??":[
+                {
+                    "??":??,
+                    "??":"??"
+                },
+                {
+                    "cas_global_id":1235,
+                    "infusionsoft_app_id":"4321"
+                }
+            ],
+            "??":??
+        }
+
++ Response 200
+
+    [Channel History][]
+
++ Response 500
+
+        {
+            "message":"??"
+        }
+        
+        
+### Pull last Execution [GET]
+The notifications endpoint returns an array of notifications for the authenticated cas_global_id and infusionsoft_app_id.
+
++ Request
+    
+         https://api.infusionsoft.com/crm/rest/v1/notifications
+
++ Response 200
+
+    [Channel History][]
+
++ Response 400
+
+        {
+            "message":"??"
+        }
