@@ -2089,8 +2089,6 @@ The Channel Consumption Service provides endpoints for the Sync Engine to get a 
 
 ## Resource Channel Subscription [/channel_subscription]
 
-### Channel Subscription [/rest/v1/channel_subscription/next]
-
 A Channel Subscription resource will contain the following attributes:
 
 | attribute | type | Description |
@@ -2100,29 +2098,22 @@ A Channel Subscription resource will contain the following attributes:
 | `credentials_id` | string | a unique identifier for the credentials of the channel subscription |
 | `execution` | nested resource | a nested resource with the attributes necessary to pull a specific range for the given channel subscription |
 
+## Channel Subscription [/rest/v1/channel_subscription/{id}/execution]
 
-### Update Execution [POST] 
+### Create Execution [POST] 
 Stores the information needed for the next Date Range subscription execution.
 
 + Request (application/json)
 
         {
-            "??":[
-                {
-                    "??":??,
-                    "??":"??"
-                },
-                {
-                    "cas_global_id":1235,
-                    "infusionsoft_app_id":"4321"
-                }
-            ],
-            "??":??
+            "start_date": "2012-11-11T11:11:11.111Z"
         }
 
 + Response 200
 
-    [Channel Subscription][]
+        {
+            "start_date": "2012-11-11T11:11:11.111Z"
+        }
 
 + Response 500
 
@@ -2130,13 +2121,14 @@ Stores the information needed for the next Date Range subscription execution.
             "message":"??"
         }
         
+## Channel Subscription [/rest/v1/channel_subscription/next]
         
-### Pull last Execution [GET]
-The notifications endpoint returns an array of notifications for the authenticated cas_global_id and infusionsoft_app_id.
+### Get Next Channel Subscription [GET]
+Gets the next channel subscription with an execution pending.
 
 + Request
     
-         https://api.infusionsoft.com/crm/rest/v1/notifications
+         https://api.infusionsoft.com/rest/v1/channel_subscription/next
 
 + Response 200
 
