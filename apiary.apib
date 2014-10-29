@@ -1935,10 +1935,10 @@ The Channel Management Service provides endpoints into the Sync Engine where new
 Statuses of particualar channel-subscriptions can be acquired, and maybe summaries of all the channels and thier overall status.
 
 ## Channel [/rest/v1/channels]
-A Channel represents source of information, such as e-mail, twitter, facebook or shopify.
+A Channel represents source of information, such as e-mail, twitter, facebook or shopify. The type represents the form of communication[STREAMING, PERIODIC, WEB_HOOK]
 
-- **id**
 - **name**
+- **type**
 - **load_script** - (String) java script code to perform loading raw data from the channel.
 - **transform_script** - (String) java script code to transform a unit of raw data into the IS cannonical form.
 
