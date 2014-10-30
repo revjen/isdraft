@@ -2093,6 +2093,7 @@ A Channel Subscription resource will contain the following attributes:
 | `since` | string | User defined string for use in next execution |
 | `until` | string | User defined string for use in next execution |
 | `sync_token` | string | User defined string for use in next execution |
+| `channel_subscription_id` | string | Identifier for associated channel_subscription |
 | `channel_subscription` | nested resource |  |
 
 ### Create Execution [POST] 
@@ -2101,7 +2102,9 @@ Stores the information needed for the next Date Range subscription execution.
 + Request (application/json)
 
         {
-            "start_date": "2012-11-11T11:11:11.111Z",
+            "since": "2012-11-11T11:11:11.111Z",
+            "until": "2013-11-11T11:11:11.111Z",
+            "sync_token": null,
             "channel_subscription_id": "1234783"
         }
 
@@ -2111,6 +2114,7 @@ Stores the information needed for the next Date Range subscription execution.
             "since": "2012-11-11T11:11:11.111Z",
             "until": "2013-11-11T11:11:11.111Z",
             "sync_token": null,
+            "channel_subscription_id": "458978gh8",
             "channel_subscription": {
                 "id":"458978gh8",
                 "credentials_id":"458234kjsh8",
