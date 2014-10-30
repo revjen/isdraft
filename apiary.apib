@@ -2024,9 +2024,6 @@ The list endpoint returns an list of all registered channels (and maybe their st
                     "type":"PERIODIC"
                 },
                 "credentials_id":"458234kjsh8",
-                "execution": {
-                    "start_date": "2012-11-11T11:11:11.111Z"
-                }
             }
 
 ### Start synching this channel subscription [POST]
@@ -2087,18 +2084,27 @@ Stop syncing this subscription on this channel.
 
 The Channel Consumption Service provides endpoints for the Sync Engine to get a channel subscription for consumption and update for consumption completion.
 
-## Resource Channel Subscription [/channel_subscription]
+## Resource Execution [/executions]
 
 A Channel Subscription resource will contain the following attributes:
 
 | attribute | type | Description |
 | --- | --- | --- |
-| `id` | string | a unique identifier for the channel subscription |
-| `channel` | nested resource | a nested resource with name and type to describe the channel for the given subscription |
-| `credentials_id` | string | a unique identifier for the credentials of the channel subscription |
-| `execution` | nested resource | a nested resource with the attributes necessary to pull a specific range for the given channel subscription |
+| `since` | string |  |
+| `until` | string |  |
+| `sync_token` | string |  |
+| `channel_subscription_id` | string | The unique identifier for the associated channel_subscription |
 
-## Channel Subscription Execution [/rest/v1/channel_subscription/{id}/execution]
++ Model (application/json)
+
+    JSON representation of a Channel.
+    
+    + Body
+        
+            {
+                "start_date": "2012-11-11T11:11:11.111Z",
+                "channel_subscription_id": "1234783"
+            }
 
 ### Create Execution [POST] 
 Stores the information needed for the next Date Range subscription execution.
@@ -2106,13 +2112,15 @@ Stores the information needed for the next Date Range subscription execution.
 + Request (application/json)
 
         {
-            "start_date": "2012-11-11T11:11:11.111Z"
+            "start_date": "2012-11-11T11:11:11.111Z",
+            "channel_subscription_id": "1234783"
         }
 
 + Response 200
 
         {
-            "start_date": "2012-11-11T11:11:11.111Z"
+            "start_date": "2012-11-11T11:11:11.111Z",
+            "channel_subscription_id": "1234783"
         }
 
 + Response 500
@@ -2121,18 +2129,28 @@ Stores the information needed for the next Date Range subscription execution.
             "message":"??"
         }
         
-## Channel Subscription [/rest/v1/channel_subscription/next]
+## Channel Subscription [/executions/next]
         
 ### Get Next Channel Subscription [GET]
 Gets the next channel subscription with an execution pending.
 
 + Request
     
-         https://api.infusionsoft.com/rest/v1/channel_subscription/next
+         https://api.infusionsoft.com/rest/v1/executions/next
 
 + Response 200
 
-    [Channel Subscription][]
+        {
+            "start_date": "2012-11-11T11:11:11.111Z",
+            "channel_subscription": {
+                "id":"458978gh8",
+                "channel":{
+                    "name":"twitter",
+                    "type":"PERIODIC"
+                },
+                "credentials_id":"458234kjsh8",
+            }
+        }
 
 + Response 400
 
