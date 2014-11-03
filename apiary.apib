@@ -2161,3 +2161,117 @@ Gets the next channel execution ready for processing.
         {
             "message":"??"
         }
+        
+# Group Channel Extract Transform
+
+The Channel Extract Transform Service provides endpoints for the registration and execution of javascript scripts to extract data for a particular channel and transform it to a canonical form.
+
+## Channel Extraction Registration [/rest/v1/channel_registry/extract{?channel_name}]
+
+### Register Channel Extraction [POST] 
+Stores the extraction script for a particular channel for later execution.
+
++ Request (application/javascript)
+
+        exports.extract = function() { exit(JSON.stringify(raw_data_items: ["Hello": "World"]));};
+
++ Response 200
+
+        {
+            "created": true
+        }
+
++ Response 500
+
+        {
+            "message":"??"
+        }
+
+## Channel Transformation Registration [/rest/v1/channel_registry/transform{?channel_name}]
+
+### Register Channel Transformation [POST] 
+Stores the transformation script for a particular channel for later execution.
+
++ Request (application/javascript)
+
+        exports.transform = function() { exit(JSON.stringify(raw_channel_events: [{channelName: 'Facebook'}]));};
+
++ Response 200
+
+        {
+            "created": true
+        }
+
++ Response 500
+
+        {
+            "message":"??"
+        }
+
+## Channel Extraction Execution [/rest/v1/channel_execute/extract{?channel_name}]
+
+### Execute Channel Extraction [POST] 
+Executes the previously registered execution script for a particular channel.
+
++ Request (application/json)
+
+        {
+            "credentials": {
+                "channel_key": "43740923814093",
+                "channel_secret": "h4352345utyergj324h3k5234"
+            },
+            "execution": {
+                "since": "1415029028"
+            }
+        }
+        
++ Response 200
+
+        {
+            "raw_data_items":[
+                "Hello World"
+            ],
+            "execution":{
+                "since": 1515029028
+            }
+        }
+
++ Response 500
+
+        {
+            "message":"??"
+        }
+        
+## Channel Transformation Execution [/rest/v1/channel_execute/transform{?channel_name}]
+
+### Execute Channel Transformation [POST] 
+Executes the previously registered transformation script for a particular channel.
+
++ Request (application/json)
+
+        {
+            "Hello": "World"
+        }
+        
++ Response 200
+
+        {
+            "channel_name": "Facebook",
+            "activity_type": "test",
+            "activity_id": 1,
+            "activityDate: "2014-10-08T23:47:35Z",
+            "description: "a test facebook feed",
+            "content": "Hello World",
+            "contentHtml": "",
+            "contentUrl": "",
+            "responseToActivityType": null,
+            "responseToActivityId": null,
+            "credentialsId": "324jkf1"
+        }
+
++ Response 500
+
+        {
+            "message":"??"
+        }
+        
