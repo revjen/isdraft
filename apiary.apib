@@ -2248,25 +2248,34 @@ Executes the previously registered execution script for a particular channel.
 Executes the previously registered transformation script for a particular channel.
 
 + Request (application/json)
-
-        {
-            "Hello": "World"
-        }
         
 + Response 200
 
         {
-            "channel_name": "Facebook",
-            "activity_type": "test",
-            "activity_id": 1,
-            "activityDate": "2014-10-08T23:47:35Z",
-            "description": "a test facebook feed",
-            "content": "Hello World",
-            "contentHtml": "",
-            "contentUrl": "",
-            "responseToActivityType": null,
-            "responseToActivityId": null,
-            "credentialsId": "324jkf1"
+            raw_channel_events:[{
+                activity_type: "faceboook-link-comment",
+                activity_id: "438039285043985_834293749237489327",
+                description: "",
+                content: "Their Midas Touch is definitely one of my top three beers of all time! #tasty",
+                content_html: "",
+                content_url: "",
+                response_to_activity_type: "link",
+                response_to_activity_id: "50923485903428509348_498237598347895743",
+                participants:[{
+                    identifier: "4523465475638765765765",
+                    name: "Paul Sokol",
+                    interaction_type: "From",
+                    first_name: "Paul",
+                    last_name: "Sokol",
+                    identity_alias: "paul.sokol85",
+                    gender: "male",
+                    locale: "fb_LT",
+                    url: "https://www.facebook.com/paul.sokol85",
+                    photo_url: "https://graph.facebook.com/425645634575375/picture?type=large",
+                    cover_url: null
+                }],
+                type: "comment"
+            }]
         }
 
 + Response 500
