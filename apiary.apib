@@ -2248,33 +2248,62 @@ Executes the previously registered execution script for a particular channel.
 Executes the previously registered transformation script for a particular channel.
 
 + Request (application/json)
-        
+        {
+            "from" : {
+                "id" : "563576374536",
+                "name" : "Dave Smith"
+            },
+            "identity" : {
+                "gender" : "male",
+                "locale" : "fb_LT",
+                "id" : "3456453645363546",
+                "last_name" : "Smith",
+                "link" : "https:\/\/www.facebook.com\/david.smith",
+                "username" : "david.smith",
+                "name" : "Dave Smith",
+                "first_name" : "Dave"
+            },
+            "like_count" : 0,
+            "id" : "366405046858884_366464163519639",
+            "original_event" : {
+                "id" : "293867224112667_366405046858884",
+                "type" : "link",
+                "created_time" : "2014-10-28T00:16:24+0000",
+                "updated_time" : "2014-10-28T03:09:27+0000"
+            },
+            "message" : "Their Midas Touch is definitely one of my top three beers of all time! #tasty",
+            "can_remove" : false,
+            "type" : "comment",
+            "created_time" : "2014-10-28T03:09:27+0000",
+            "user_likes" : false
+        }
+
 + Response 200
 
         {
-            raw_channel_events:[{
-                activity_type: "faceboook-link-comment",
-                activity_id: "438039285043985_834293749237489327",
-                description: "",
-                content: "Their Midas Touch is definitely one of my top three beers of all time! #tasty",
-                content_html: "",
-                content_url: "",
-                response_to_activity_type: "link",
-                response_to_activity_id: "50923485903428509348_498237598347895743",
-                participants:[{
-                    identifier: "4523465475638765765765",
-                    name: "Paul Sokol",
-                    interaction_type: "From",
-                    first_name: "Paul",
-                    last_name: "Sokol",
-                    identity_alias: "paul.sokol85",
-                    gender: "male",
-                    locale: "fb_LT",
-                    url: "https://www.facebook.com/paul.sokol85",
-                    photo_url: "https://graph.facebook.com/425645634575375/picture?type=large",
-                    cover_url: null
+            "raw_channel_events":[{
+                "activity_type": "faceboook-link-comment",
+                "activity_id": "438039285043985_834293749237489327",
+                "description": "",
+                "content": "Their Midas Touch is definitely one of my top three beers of all time! #tasty",
+                "content_html": "",
+                "content_url": "",
+                "response_to_activity_type": "link",
+                "response_to_activity_id": "50923485903428509348_498237598347895743",
+                "participants":[{
+                    "identifier": "4523465475638765765765",
+                    "name": "Paul Sokol",
+                    "interaction_type": "From",
+                    "first_name": "Paul",
+                    "last_name": "Sokol",
+                    "identity_alias": "paul.sokol85",
+                    "gender": "male",
+                    "locale": "fb_LT",
+                    "url": "https://www.facebook.com/paul.sokol85",
+                    "photo_url": "https://graph.facebook.com/425645634575375/picture?type=large",
+                    "cover_url": null
                 }],
-                type: "comment"
+                "type": "comment"
             }]
         }
 
