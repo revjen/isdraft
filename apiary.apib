@@ -2313,3 +2313,83 @@ Executes the previously registered transformation script for a particular channe
             "message":"??"
         }
         
+# Group Channel Event
+
+The Channel Event Service provides endpoints for the Sync Engine to persist and queue a channel event.
+
+## Resource Channel Event [/rest/v1/chanel_events]
+
+A Channel Event resource will contain the following attributes:
+
+| attribute | type | Description |
+| --- | --- | --- |
+| `type` | string | 'commerce', 'communication' |
+| `event_id` | string | Unique identifier for the event |
+| `participants` | nested resource |  |
+
+### Create Channel Event [POST] 
+Persists the channel event in a database and sqs.
+
++ Request (application/json)
+
+        {
+            "type": "communication",
+            "event_id": "213797324",
+            "activity_type": "faceboook-link-comment",
+            "activity_id": "438039285043985_834293749237489327",
+            "description": "",
+            "content": "Their Midas Touch is definitely one of my top three beers of all time! #tasty",
+            "content_html": "",
+            "content_url": "",
+            "response_to_activity_type": "link",
+            "response_to_activity_id": "50923485903428509348_498237598347895743",
+            "participants":[{
+                "identifier": "4523465475638765765765",
+                "name": "Paul Sokol",
+                "interaction_type": "From",
+                "first_name": "Paul",
+                "last_name": "Sokol",
+                "identity_alias": "paul.sokol85",
+                "gender": "male",
+                "locale": "fb_LT",
+                "url": "https://www.facebook.com/paul.sokol85",
+                "photo_url": "https://graph.facebook.com/425645634575375/picture?type=large",
+                "cover_url": null
+            }],
+            "type": "comment"
+        }
+
++ Response 200
+
+        {
+            "type": "communication",
+            "event_id": "213797324",
+            "activity_type": "faceboook-link-comment",
+            "activity_id": "438039285043985_834293749237489327",
+            "description": "",
+            "content": "Their Midas Touch is definitely one of my top three beers of all time! #tasty",
+            "content_html": "",
+            "content_url": "",
+            "response_to_activity_type": "link",
+            "response_to_activity_id": "50923485903428509348_498237598347895743",
+            "participants":[{
+                "identifier": "4523465475638765765765",
+                "name": "Paul Sokol",
+                "interaction_type": "From",
+                "first_name": "Paul",
+                "last_name": "Sokol",
+                "identity_alias": "paul.sokol85",
+                "gender": "male",
+                "locale": "fb_LT",
+                "url": "https://www.facebook.com/paul.sokol85",
+                "photo_url": "https://graph.facebook.com/425645634575375/picture?type=large",
+                "cover_url": null
+            }],
+            "type": "comment"
+        }
+
++ Response 500
+
+        {
+            "message":"??"
+        }
