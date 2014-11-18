@@ -2321,11 +2321,42 @@ The Channel Event Service provides endpoints for the Sync Engine to persist and 
 
 A Channel Event resource will contain the following attributes:
 
+Communication Event
+
 | attribute | type | Description |
 | --- | --- | --- |
-| `type` | string | 'commerce', 'communication' |
+| `type` | string | 'communication' |
 | `event_id` | string | Unique identifier for the event |
 | `participants` | nested resource |  |
+| `event_type` | string |  |
+| `event_date` | date |  |
+| `summary` | string |  |
+| `text` | string |  |
+| `html` | string |  |
+| `url` | string |  |
+| `linked_urls` | list |  |
+| `response_to_event_id` | string |  |
+
+
+Commerce Event
+
+| attribute | type | Description |
+| --- | --- | --- |
+| `type` | string | 'commerce' |
+| `transaction_id` | string | Unique identifier for the event |
+| `participants` | nested resource |  |
+| `transaction_type` | string | A string indicating the type of transaction 'Payment','Refund','Credit' |
+| `amount` | double | The amount of the transaction |
+| `currency` | string | The currency type of the transaction |
+| `test` | boolean | True if the transaction was a test |
+| `gateway` | string | The payment gateway that provided authorization |
+| `collection_method` | string | A string indicating the collection method of the transaction 'Cash','Check','CreditCard','MoneyOrder','Other' |
+| `status` | string | A string indicating the status of the transaction 'Pending','Success','Failure','Error' |
+| `authorization` | string | The transaction authorization |
+| `errors` | list | A list of strings indicating the errors involved in the transaction |
+| `created_date` | date | The date in which the transaction was created |
+| `note` | string | Any note present on the transaction |
+| `order` | nested resource | |
 
 ### Create Channel Event [POST] 
 Persists the channel event in a database and sqs.
