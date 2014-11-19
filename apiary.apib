@@ -919,7 +919,7 @@ To retrieve a single order simply submit a request to the order endpoint with th
     [Order][]
 
 
-## Orders Collection [/rest/v1/orders/search{?since,until,limit,offset,contact_id}]
+## Orders Collection [/rest/v1/orders/search{?since,until,limit,offset,contact_id,product_id}]
 The search endpoint returns 3 additional attributes along with an array of notes:
 
 - **count** - The number of notes matching your search parameters
@@ -1935,12 +1935,14 @@ The Channel Management Service provides endpoints into the Sync Engine where new
 Statuses of particualar channel-subscriptions can be acquired, and maybe summaries of all the channels and thier overall status.
 
 ## Channel [/rest/v1/channels]
-A Channel represents source of information, such as e-mail, twitter, facebook or shopify. The type represents the form of communication[STREAMING, PERIODIC, WEB_HOOK].  Where the combination of a **name** and **type** represents a unique channel.
+A Channel represents source of information, such as e-mail, twitter, facebook or shopify. The type represents the form of communication[STREAMING, PERIODIC, WEB_HOOK].  Where the combination of a **name** and **type** represents a unique channel. <p>
+The Channel resource contains the following attributes:
 
-- **name**
-- **type**
-- **load_script** - (String) java script code to perform loading raw data from the channel.
-- **transform_script** - (String) java script code to transform a unit of raw data into the IS cannonical form.
+| Attribute | Type | Description |
+| --- | --- | --- |
+| `name` | string | The name of the channel |
+| `type` | string | The channel type. Currently supported types are: "PERIODIC" |
+| `extract_transform_script` | string | java script code to perform loading raw data from the channel, and transforming the unit of raw data into the Infusionsoft canonical form. |
 
 + Model (application/json)
 
@@ -1951,8 +1953,7 @@ A Channel represents source of information, such as e-mail, twitter, facebook or
             {
                 "name":"twitter",
                 "type":"PERIODIC"
-                "load_script":"do stuff while true; but don't core or anything;",
-                "transform_script":"take this-data, and spit out the cannonical form; also try not to cause a heap or stack overflow;"
+                "extract_transform_script":"load the stuff from the channel; convert to canonical form;"
             }
 
 
@@ -1965,21 +1966,64 @@ A Channel represents source of information, such as e-mail, twitter, facebook or
 + Response 201 (application/json)
 
     [Channel][]
-    
-    
-## Channel Delete [/rest/v1/channels/]
-Un-register this channel.
 
-### Stop synching this account on this channel [DELETE]
++ Response 400 (application/json)
+
+        If required information is missing.
+        {
+            "message":"The channel is missing required information."
+        }
+
+        If the provided channel type is unsupported.
+        {
+            "message":"Invalid channel type."
+        }
+        
++ Response 500 (application/json)
+
+        {
+            "message":"An unrecoverable system exception occurred."
+        }
+        
+## Channel Delete [/rest/v1/channels/]
+Un-register this channel. This, in effect, will un-sync any accounts currently subscribed to this channel.
+
+### Stop synching accounts on this channel [DELETE]
 
 + Request (application/json)
 
-    [Channel][]
+        {
+            "name":"twitter",
+            "type":"PERIODIC"
+        }
     
-+ Response 201
++ Response 204
 
++ Response 400 (application/json)
+
+        If required information is missing.
+        {
+            "message":"The channel is missing required information."
+        }
+
+        If the provided channel type is unsupported.
+        {
+            "message":"Invalid channel type."
+        }
+        
+        If the provided channel information is invalid.
+        {
+            "message":"Could not find the channel for name=XXX, type=XXX"
+        }
+        
++ Response 500 (application/json)
+
+        {
+            "message":"An unrecoverable system exception occurred."
+        }
+        
 ## Channel List [/rest/v1/channels/list]
-The list endpoint returns an list of all registered channels (and maybe their states, and number of activley synced subscriptions)
+The list endpoint returns an list of all registered channels.
 
 + Model (application/json)
 
@@ -2009,21 +2053,25 @@ The list endpoint returns an list of all registered channels (and maybe their st
     [Channel List][] 
 
 ## Channel Subscription [/rest/v1/channel_subscriptions/]
+A Channel Subscription represents an account which has subscribed to a Channel <p>
+The Channel Subscription resource contains the following attributes:
 
-- id
-- channel_name
-- credentials_id
-
+| Attribute | Type | Description |
+| --- | --- | --- |
+| `id` | UUID | The unique identifier for the resource |
+| `credentials_id` | string | The identifier to the account credentials |
+| `channel` | nested resource | The channel information |
 
 + Model (application/json)
 
             {
                 "id":"458978gh8",
+                "credentials_id":"458234kjsh8",
                 "channel":{
                     "name":"twitter",
                     "type":"PERIODIC"
                 },
-                "credentials_id":"458234kjsh8",
+                
             }
 
 ### Start synching this channel subscription [POST]
@@ -2041,11 +2089,35 @@ The list endpoint returns an list of all registered channels (and maybe their st
 + Response 201 (application/json)
 
     [Channel Subscription][]
+    
+    
++ Response 400 (application/json)
+
+        If required information is missing.
+        {
+            "message":"The channel subscription is missing required information."
+        }
+
+        If the provided channel type is unsupported.
+        {
+            "message":"Invalid channel type."
+        }
+        
+        If the provided channel information is invalid.
+        {
+            "message":"Could not find the channel for name=XXX, type=XXX"
+        }
+        
++ Response 500 (application/json)
+
+        {
+            "message":"An unrecoverable system exception occurred."
+        }    
 
 ## Channel Account Delete [/rest/v1/channel_subscriptions/{?id}]
 Stop syncing this subscription on this channel.
-
-- **id** - the unique identifier of this subscription on this channel provided when starting the sync.
++ Parameters
+    + id (UUID, `f512602b-3fe2-4942-9eb5-5bcca974a0c3`) ... The unique identifier of this subscription on this channel provided when starting the sync.
 
 ### Stop synching this subscription on this channel [DELETE]
 
@@ -2062,10 +2134,18 @@ Stop syncing this subscription on this channel.
             {
                 "channel_subscriptions":[
                     {
-                        "id":"458978gh8",
+                        "id":"15d13650-6f65-11e4-beab-7db8ea9353f1",
                         "channel":{
                             "name":"twitter",
                             "type":"PERIODIC"
+                        },
+                        "credentials_id":"458234kjsh8"
+                    },
+                    {
+                        "id":"f512602b-3fe2-4942-9eb5-5bcca974a0c3",
+                        "channel":{
+                            "name":"twitter",
+                            "type":"STREAMING"
                         },
                         "credentials_id":"458234kjsh8"
                     }
@@ -2078,6 +2158,11 @@ Stop syncing this subscription on this channel.
 
     [Channel Subscription List][]
 
++ Response 500 (application/json)
+
+        {
+            "message":"An unrecoverable system exception occurred."
+        }    
     
     
 # Group Channel Consumption
