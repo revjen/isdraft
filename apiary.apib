@@ -2114,6 +2114,40 @@ The Channel Subscription resource contains the following attributes:
             "message":"An unrecoverable system exception occurred."
         }    
 
+
+### Retrieve the status for this channel subscription [GET]
+ 
++ Response 200
+
+        {
+            "channel_subscriptions":[
+                {
+                    "id":"15d13650-6f65-11e4-beab-7db8ea9353f1",
+                    "channel":{
+                        "name":"twitter",
+                        "type":"PERIODIC"
+                    },
+                    "credentials_id":"458234kjsh8"
+                },
+                {
+                    "id":"f512602b-3fe2-4942-9eb5-5bcca974a0c3",
+                    "channel":{
+                        "name":"twitter",
+                        "type":"STREAMING"
+                    },
+                    "credentials_id":"458234kjsh8"
+                }
+            ]
+        }
+
++ Response 500 (application/json)
+
+        {
+            "message":"An unrecoverable system exception occurred."
+        }    
+    
+
+
 ## Channel Account Delete [/rest/v1/channel_subscriptions/{?id}]
 Stop syncing this subscription on this channel.
 + Parameters
@@ -2123,47 +2157,7 @@ Stop syncing this subscription on this channel.
 
 + Response 204
 
-## Channel Subscription List [/rest/v1/channel_subscriptions/]
 
-+ Model (application/json)
-
-    JSON representation of a Task Resource.
-
-    + Body
-            
-            {
-                "channel_subscriptions":[
-                    {
-                        "id":"15d13650-6f65-11e4-beab-7db8ea9353f1",
-                        "channel":{
-                            "name":"twitter",
-                            "type":"PERIODIC"
-                        },
-                        "credentials_id":"458234kjsh8"
-                    },
-                    {
-                        "id":"f512602b-3fe2-4942-9eb5-5bcca974a0c3",
-                        "channel":{
-                            "name":"twitter",
-                            "type":"STREAMING"
-                        },
-                        "credentials_id":"458234kjsh8"
-                    }
-                ]
-            }
-
-### Retrieve the status for this channel subscription [GET]
- 
-+ Response 200
-
-    [Channel Subscription List][]
-
-+ Response 500 (application/json)
-
-        {
-            "message":"An unrecoverable system exception occurred."
-        }    
-    
     
 # Group Channel Consumption
 
