@@ -1958,7 +1958,7 @@ The Channel resource contains the following attributes:
 
 
 ### Register a new channel [POST]
-
+Register a channel.
 + Request (application/json)
 
     [Channel][]
@@ -1985,11 +1985,8 @@ The Channel resource contains the following attributes:
             "message":"An unrecoverable system exception occurred."
         }
         
-## Channel Delete [/rest/v1/channels/]
-Un-register this channel. This, in effect, will un-sync any accounts currently subscribed to this channel.
-
 ### Stop synching accounts on this channel [DELETE]
-
+Un-register this channel. This, in effect, will un-sync any accounts currently subscribed to this channel.
 + Request (application/json)
 
         {
@@ -1998,6 +1995,8 @@ Un-register this channel. This, in effect, will un-sync any accounts currently s
         }
     
 + Response 204
+
+        Success
 
 + Response 400 (application/json)
 
@@ -2022,35 +2021,25 @@ Un-register this channel. This, in effect, will un-sync any accounts currently s
             "message":"An unrecoverable system exception occurred."
         }
         
-## Channel List [/rest/v1/channels/list]
-The list endpoint returns an list of all registered channels.
-
-+ Model (application/json)
-
-    + Body
-    
-            {
-                "channels": [
-                    {
-                        "name":"twitter",
-                        "type":"PERIODIC",
-                        "load_script":"do stuff while true; but don't core or anything;",
-                        "transform_script":"take this-data, and spit out the cannonical form; also try not to cause a heap or stack overflow;"
-                    },
-                    {
-                        "name":"theface",
-                        "type":"STREAMING",
-                        "load_script":"do stuff while true; but don't core or anything;",
-                        "transform_script":"take this-data, and spit out the cannonical form; also try not to cause a heap or stack overflow;"
-                    }
-                ]
-            }
-
 ### List all Channels [GET]
+Returns a list of all registered channels.
++ Response 302
 
-+ Response 200
+        {
+            "channels": [
+                {
+                    "name":"twitter",
+                    "type":"PERIODIC",
+                    "extract_transform_script":"load the stuff from the channel; convert to canonical form;"
+                },
+                {
+                    "name":"theface",
+                    "type":"STREAMING",
+                    "extract_transform_script":"load the stuff from the channel; convert to canonical form;"
+                }
+            ]
+        }
 
-    [Channel List][] 
 
 ## Channel Subscription [/rest/v1/channel_subscriptions/]
 A Channel Subscription represents an account which has subscribed to a Channel <p>
