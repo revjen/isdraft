@@ -1940,6 +1940,7 @@ The Channel resource contains the following attributes:
 
 | Attribute | Type | Description |
 | --- | --- | --- |
+| `id` | UUID | The unique identifier for the resource |
 | `name` | string | The name of the channel |
 | `type` | string | The channel type. Currently supported types are: "PERIODIC" |
 | `extract_transform_script` | string | java script code to perform loading raw data from the channel, and transforming the unit of raw data into the Infusionsoft canonical form. |
@@ -1989,7 +1990,26 @@ Register a channel.
         {
             "message":"An unrecoverable system exception occurred."
         }
-    
+        
+### List all Channels [GET]
+Returns a list of all registered channels.
++ Response 302
+
+        {
+            "channels": [
+                {
+                    "name":"twitter",
+                    "type":"PERIODIC",
+                    "extract_transform_script":"load the stuff from the channel; convert to canonical form;"
+                },
+                {
+                    "name":"theface",
+                    "type":"STREAMING",
+                    "extract_transform_script":"load the stuff from the channel; convert to canonical form;"
+                }
+            ]
+        }
+
 ## Channel Delete [/rest/v1/channels/{id}]
 
 + Parameters
@@ -2025,24 +2045,6 @@ Un-register this channel. This, in effect, will un-sync any accounts currently s
             "message":"An unrecoverable system exception occurred."
         }
         
-### List all Channels [GET]
-Returns a list of all registered channels.
-+ Response 302
-
-        {
-            "channels": [
-                {
-                    "name":"twitter",
-                    "type":"PERIODIC",
-                    "extract_transform_script":"load the stuff from the channel; convert to canonical form;"
-                },
-                {
-                    "name":"theface",
-                    "type":"STREAMING",
-                    "extract_transform_script":"load the stuff from the channel; convert to canonical form;"
-                }
-            ]
-        }
 
 
 ## Channel Subscription [/rest/v1/channel_subscriptions/]
