@@ -1951,6 +1951,7 @@ The Channel resource contains the following attributes:
     + Body
         
             {
+                "id": "6daf6e80-796c-11e4-9d86-07108d192dc8",
                 "name":"twitter",
                 "type":"PERIODIC"
                 "extract_transform_script":"load the stuff from the channel; convert to canonical form;"
@@ -1961,8 +1962,12 @@ The Channel resource contains the following attributes:
 Register a channel.
 + Request (application/json)
 
-    [Channel][]
-    
+        {
+            "name":"twitter",
+            "type":"PERIODIC"
+            "extract_transform_script":"load the stuff from the channel; convert to canonical form;"
+        }
+
 + Response 201 (application/json)
 
     [Channel][]
@@ -1984,16 +1989,16 @@ Register a channel.
         {
             "message":"An unrecoverable system exception occurred."
         }
-        
+    
+## Channel Delete [/rest/v1/channels/{id}]
+
++ Parameters
+    + id (UUID, `6daf6e80-796c-11e4-9d86-07108d192dc8`) ... The unique identifier of this channel provided when registering.
+
+
 ### Stop synching accounts on this channel [DELETE]
 Un-register this channel. This, in effect, will un-sync any accounts currently subscribed to this channel.
-+ Request (application/json)
 
-        {
-            "name":"twitter",
-            "type":"PERIODIC"
-        }
-    
 + Response 204
 
 
