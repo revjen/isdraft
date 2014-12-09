@@ -2,15 +2,16 @@ FORMAT: 1A
 HOST: https://api.infusionsoft.com/crm
 
 # DRAFT Infusionsoft REST API
-## Introduction
-The Infusionsoft API enables third-party applications to communicate with Infusionsoft and process, update, and destroy data for a wide variety of uses. You can manage contacts, place orders, send messages, and most other things available for use in the Infusionsoft software.
+##Making Requests - XML-RPC & REST
+The Infusionsoft API is currently divided into two different sets of services, differentiated by the type of request you’ll make. The XML-RPC API contains the majority of API services, and the REST API contains new services previously unavailable via XML-RPC. 
 
-### Helper Libraries
-Infusionsoft officially supports the PHP library we created in-house. In addition, there are a number of third party helper libraries created by members of the community that may be useful to you. Many of these libraries are open source, so we encourage you to get into contact with their creators if you find bugs or have ideas for feature requests.
+Both APIs handle authentication via OAuth 2.0. There is one difference between the two APIs: when making REST requests, you’ll pass your authentication token as a query string parameter as opposed to including it in the body of your request. Make sure to read about authentication here.
 
-### Additional Languages
-Additionally, we have created a number of sample files that implement the Infusionsoft API in many languages, including ASP, .Net, Java, Perl, PHP, Python, and Ruby. You can try those out for yourself by downloading all samples on [Github (zip, 2.5mb)](https://github.com/infusionsoft/API-Sample-Code/archive/master.zip)
+###Making an XML-RPC Request
+Infusionsoft has a set of services that follow the XML-RPC standard. After creating your XML object (examples are available for each method), make an HTTP POST with the XML in the POST body to https://api.infusionsoft.com/crm/xmlrpc/v1/
 
+###Making a REST Request
+Infusionsoft has a set of services that are built in a RESTful manner, and follow the REST principles you’re probably already familiar with. GET, POST, PATCH, and DELETE verbs are all supported, and any payload will be JSON included in the body of the request, with a JSON response provided from Infusionsoft. All RESTful requests should be made to https://api.infusionsoft.com/crm/rest/v1/
 
 
 ## Getting Started With OAuth2
@@ -59,6 +60,26 @@ The body of the http calls and responses are represented in json.
 
 ### Dates
 Dates are represented as "extended format combined date and time" as defined by [ISO 8601](http://www.w3.org/TR/NOTE-datetime).  (ex. YYYY-MM-DDThh:mm:ss.sssTZD) See [Joda Time](http://joda-time.sourceforge.net/cal_iso.html) for an in depth description.
+
+##Allowed HTTPs requests:
+
+- `POST` - Creates or updates a resource
+- `PATCH` - Partial update for a resource
+- `GET` - Retrieves a resource or list of resources
+- `DELETE` - Delete a resource
+
+##Typical Server Responses
+
+- 200 `OK` - The request was successful (some API calls may return 201 instead).
+- 201 `Created` - The request was successful and a resource was created.
+- 204 `No Content` - The request was successful but there is no representation to return (that is, the response is empty).
+- 400 `Bad Request` - The request could not be understood or was missing required parameters.
+- 401 `Unauthorized` - Authentication failed or user does not have permissions for the requested operation.
+- 403 `Forbidden` - Access denied.
+- 404 `Not Found` - Resource was not found.
+- 405 `Method Not Allowed` - Requested method is not supported for the specified resource.
+- 429 `Too Many Requests` - Exceeded Infusionsoft API limits.   
+- 503 `Service Unavailable` - The service is temporary unavailable (e.g. scheduled Platform Maintenance). Try again later.
 
 # Group Tasks
 With the Task endpoints you can search, create, put, patch and destroy tasks in Infusionsoft. 
@@ -167,7 +188,7 @@ To update a task send a JSON with one or more updated values of the task resourc
 + Response 201
 
 
-## Tasks Collection [/rest/v1/tasks/search{?since,until,limit,offset,order,completed,has_due_date,user_id}]
+## Tasks Collection [/rest/v1/tasks{?since,until,limit,offset,order,completed,has_due_date,user_id}]
 The search endpoint returns 4 additional attributes along with an array of tasks:
 
 - **count** - The number of tasks matching your search parameters.
@@ -264,8 +285,10 @@ To create a task simply provide the JSON hash of the task, containing at least t
 
     [Task][]
 
-## Tasks Sync Collection [/rest/v1/tasks/sync{?sync_token,limit,offset}]
-The sync endpoint returns 4 additional attributes along with an array of task statuses:
+## Tasks Sync Collection [/rest/v1/tasks{?sync_token,limit,offset}]
+Sync provides a simple way to retreive an array of task changes since the last time you performed a sync. To perform a sync simply pass the sync token that was returned in a previous GET request as a URL parameter. 
+
+Example:  I want to get all the tasks for a specific user for the past 6 months. First make a GET request to /tasks with the 'since' and 'until' parameters set to your preferred date range. Infusionsoft will return the tasks matching your query along with a sync token on the last page of your results. Now when you want to get a list of tasks that have been added, deleted or modified since the sync token was generated simply make another GET request to /tasks and pass the 'sync_token' as a parameter.
 
 - **count** - The number of task statuses matching your search parameters
 - **next** - The URI for the next page of task statuses. A null value means there is not a next page. 
@@ -919,7 +942,7 @@ To retrieve a single order simply submit a request to the order endpoint with th
     [Order][]
 
 
-## Orders Collection [/rest/v1/orders/search{?since,until,limit,offset,contact_id,product_id}]
+## Orders Collection [/rest/v1/orders{?since,until,limit,offset,contact_id,product_id}]
 The search endpoint returns 3 additional attributes along with an array of notes:
 
 - **count** - The number of notes matching your search parameters
