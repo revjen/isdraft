@@ -1252,7 +1252,7 @@ The search endpoint returns 3 additional attributes along with an array of trans
                 "previous": null
             }
             
-### Search for Transactions [GET]
+### List all  Transactions [GET]
 The Search endpoint returns an array of transactions matching the search parameters you supplied. All parameters are optional. If your make a call to the search endpoint without passing the *since* or *until* paramenters the endpoint will return all transactions.
 
 + Parameters
@@ -1265,7 +1265,17 @@ The Search endpoint returns an array of transactions matching the search paramet
 
     [Transactions Collection][]  
 
+## Transactions Sync [/rest/v1/transactions{?sync_token,limit,offset}]
+Sync provides a simple way to retreive an array of changes since the last time you performed a sync. To perform a sync simply pass the sync token that was returned in a previous GET request as a URL parameter. 
 
+Example:  I want to get all the transactions for a specific user for the past 6 months. First make a GET request to /transactions with the 'since' and 'until' parameters set to your preferred date range. Infusionsoft will return the transactions matching your query along with a sync token on the last page of your results. Now when you want to get a list of transactions that have been added, deleted or modified since the sync token was generated simply make another GET request to /transactions and pass the 'sync_token' as a parameter.
+
+- **count** - The number of task statuses matching your search parameters
+- **next** - The URI for the next page of task statuses. A null value means there is not a next page. 
+- **previous** - The URI for the previous page of task statuses. A null value means there is not a previous page. 
+- **sync_token** - Token returned only on the last page of results. Can be used in subsequent calls to the sync endpoint to restrict the result set to tasks that have been updated, created, and deleted since the result set when the sync_token was returned.
+
++ Model (application/json)
 
 # Group Interactions
 The Interaction Service is an internal only API designed for our Mobile Applications. The Interaction Service is used to sync the *Recent* screens between multiple devices.  
