@@ -948,14 +948,12 @@ The search endpoint returns 3 additional attributes along with an array of notes
 - **count** - The number of notes matching your search parameters
 - **next** - The URI for the next page of notes. A null value means there is not a next page. 
 - **previous** - The URI for the previous page of notes. A null value means there is not a previous page. 
+- **sync_token** - Token returned only on the last page of results. The *sync_token* can be passed to the *sync* endpoint to restrict the result set to only tasks updated, created, and deleted since the result set when the sync_token was returned.
 
 + Model (application/json)
 
     JSON representation of an Order Collection Resource.
 
-    + Headers
-
-            Key: value
 
     + Body
 
@@ -1085,9 +1083,10 @@ The search endpoint returns 3 additional attributes along with an array of notes
                 "count": 2,
                 "next": null,
                 "previous": null
+                "sync_token": "MFDLJSDUiFiiuds"
             }
             
-### Search for Orders [GET]
+### List all Orders [GET]
 The Search endpoint returns an array of orders matching the search parameters you supplied. All parameters are optional. If your make a call to the search endpoint without passing the *since* or *until* paramenters the endpoint will return all orders.
 
 + Parameters
@@ -1101,12 +1100,46 @@ The Search endpoint returns an array of orders matching the search parameters yo
 
     [Orders Collection][] 
   
-  
+## Order Creation [/rest/v1/orders]
+### Create an Order [POST]
+
++ Response 201 (application/json)
+    [Order][]
+
+## Orders Sync [/rest/v1/orders{?sync_token,limit,offset}]
+Sync provides a simple way to retreive an array of order changes since the last time you performed a sync. To perform a sync simply pass the sync token that was returned in a previous GET request as a URL parameter. 
+
+Example:  I want to get all the orders for a specific user for the past 6 months. First make a GET request to /orders with the 'since' and 'until' parameters set to your preferred date range. Infusionsoft will return the orders matching your query along with a sync token on the last page of your results. Now when you want to get a list of orders that have been added, deleted or modified since the sync token was generated simply make another GET request to /orders and pass the 'sync_token' as a parameter.
+
+- **count** - The number of order statuses matching your search parameters
+- **next** - The URI for the next page of orders statuses. A null value means there is not a next page. 
+- **previous** - The URI for the previous page of order statuses. A null value means there is not a previous page. 
+- **sync_token** - Token returned only on the last page of results. Can be used in subsequent calls to the sync endpoint to restrict the result set to tasks that have been updated, created, and deleted since the result set when the sync_token was returned.
+
++ Model (application/json)
+
+    JSON representation of a Order Status Collection Resource.
+
+
+    + Body
+
+
+### Sync for Orders [GET]
+The Sync endpoint returns an array of orderStatuses based on orders updated, created, or deleted since the result set when the sync_token was returned.
+
++ Parameters
+    + limit (optional, number, `100`) ... Specify the total number of results you would like returned per page. Limit 1,000.
+    + offset (optional, number, `100`) ... Specify the number of records to offset the results by for paging.
+    + sync_token (required, string, `MFDLJSDUiFiiuds=`) ... Specify the sync_token from the previous search or sync request to see all tasks updated, created, and deleted since the last request. A sync_token may expire, in which case the server will respond with 410 GONE and the client should perform a full synchronization by searching all orders. Can only be used in conjuction with limit and offset parameters.
++ Response 200
+
+    [Orders Sync][]  
+
   
 # Group Transactions
 With the Transactions endpoints you can search transactions  
 
-## Transaction [/rest/v1/transaction/{id}]
+## Transaction [/rest/v1/transactions/{id}]
 A single Transaction object. 
 
 The Transaction endpoint will return the following resources and attributes:
@@ -1163,7 +1196,7 @@ To retrieve a single transaction simply submit a request to the transaction endp
     [Transaction][]
 
 
-## Transactions Collection [/rest/v1/transactions/search{?since,until,limit,offset,contact_id}]
+## Transactions Collection [/rest/v1/transactions/{?since,until,limit,offset,contact_id}]
 The search endpoint returns 3 additional attributes along with an array of transactions:
 
 - **count** - The number of transactions matching your search parameters
