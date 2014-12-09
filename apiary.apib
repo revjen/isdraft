@@ -189,7 +189,7 @@ To update a task send a JSON with one or more updated values of the task resourc
 
 
 ## Tasks Collection [/rest/v1/tasks{?since,until,limit,offset,order,completed,has_due_date,user_id}]
-The search endpoint returns 4 additional attributes along with an array of tasks:
+Retrieve a list of tasks based on search parameters and/or specific filters. Will return an empty array if no tasks match your specified search criteria. If you request the Tasks list with no additional parameters, a sync token will be returned with the results. You can then specify the sync token on the subsequent request and we’ll only return tasks that have been created or modified after the sync token was generated.
 
 - **count** - The number of tasks matching your search parameters.
 - **next** - The URI for the next page of tasks. A null value means there is not a next page. 
@@ -285,7 +285,7 @@ To create a task simply provide the JSON hash of the task, containing at least t
 
     [Task][]
 
-## Tasks Sync Collection [/rest/v1/tasks{?sync_token,limit,offset}]
+## Tasks Sync [/rest/v1/tasks{?sync_token,limit,offset}]
 Sync provides a simple way to retreive an array of task changes since the last time you performed a sync. To perform a sync simply pass the sync token that was returned in a previous GET request as a URL parameter. 
 
 Example:  I want to get all the tasks for a specific user for the past 6 months. First make a GET request to /tasks with the 'since' and 'until' parameters set to your preferred date range. Infusionsoft will return the tasks matching your query along with a sync token on the last page of your results. Now when you want to get a list of tasks that have been added, deleted or modified since the sync token was generated simply make another GET request to /tasks and pass the 'sync_token' as a parameter.
@@ -354,7 +354,7 @@ The Sync endpoint returns an array of taskStatuses based on tasks updated, creat
     + sync_token (required, string, `MFDLJSDUiFiiuds=`) ... Specify the sync_token from the previous search or sync request to see all tasks updated, created, and deleted since the last request. A sync_token may expire, in which case the server will respond with 410 GONE and the client should perform a full synchronization by searching all tasks. Can only be used in conjuction with limit and offset parameters.
 + Response 200
 
-    [Tasks Sync Collection][]   
+    [Tasks Sync][]   
 
 
 
