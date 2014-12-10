@@ -2121,18 +2121,14 @@ The Channel Subscription resource contains the following attributes:
 | --- | --- | --- |
 | `id` | UUID | The unique identifier for the resource |
 | `credentials_id` | string | The identifier to the account credentials |
-| `channel` | nested resource | The channel information |
+| `channel_id` |string | The id of the channel which was subscribed |
 
 + Model (application/json)
 
             {
                 "id":"458978gh8",
                 "credentials_id":"458234kjsh8",
-                "channel":{
-                    "name":"twitter",
-                    "type":"PERIODIC"
-                },
-                
+                "channel_id":"dasdj213dswef"
             }
 
 ### Start synching this channel subscription [POST]
@@ -2184,18 +2180,12 @@ The Channel Subscription resource contains the following attributes:
             "channel_subscriptions":[
                 {
                     "id":"15d13650-6f65-11e4-beab-7db8ea9353f1",
-                    "channel":{
-                        "name":"twitter",
-                        "type":"PERIODIC"
-                    },
+                    "channel_id":"12345abc",
                     "credentials_id":"458234kjsh8"
                 },
                 {
                     "id":"f512602b-3fe2-4942-9eb5-5bcca974a0c3",
-                    "channel":{
-                        "name":"twitter",
-                        "type":"STREAMING"
-                    },
+                    "channel_id":"45678lmnop",
                     "credentials_id":"458234kjsh8"
                 }
             ]
