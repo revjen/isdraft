@@ -2099,21 +2099,15 @@ Un-register this channel. This, in effect, will un-sync any accounts currently s
 + Response 204
 
 
++ Response 404
+
+        If the channel does not exist
+
 + Response 400 (application/json)
 
-        If required information is missing.
-        {
-            "message":"The channel is missing required information."
-        }
-
-        If the provided channel type is unsupported.
+        If unable to remove the channel due to an unsupported channel type.
         {
             "message":"Invalid channel type."
-        }
-        
-        If the provided channel information is invalid.
-        {
-            "message":"Could not find the channel for name=XXX, type=XXX"
         }
         
 + Response 500 (application/json)
@@ -2147,10 +2141,7 @@ The Channel Subscription resource contains the following attributes:
 + Request (application/json)
 
             {
-                "channel":{
-                    "name":"twitter",
-                    "type":"PERIODIC"
-                },
+                "channel_id":"thechannelid12344",
                 "credentials_id":"458234kjsh8"
             }
             
@@ -2171,11 +2162,16 @@ The Channel Subscription resource contains the following attributes:
             "message":"Invalid channel type."
         }
         
-        If the provided channel information is invalid.
+        If the requested channel does not exist.
         {
-            "message":"Could not find the channel for name=XXX, type=XXX"
+            "message":"Could not find the channel with ID = XXX"
         }
         
+        If user credentials already subscribed to this channel.
+        {
+            "message":"Already subscribed to this channel."
+        }
+
 + Response 500 (application/json)
 
         {
@@ -2210,7 +2206,7 @@ The Channel Subscription resource contains the following attributes:
     
 
 
-## Channel Account Delete [/rest/v1/channel_subscriptions/{id}]
+## Channel Subscription Delete [/rest/v1/channel_subscriptions/{id}]
 Stop syncing this subscription on this channel.
 + Parameters
     + id (UUID, `f512602b-3fe2-4942-9eb5-5bcca974a0c3`) ... The unique identifier of this subscription on this channel provided when starting the sync.
@@ -2219,7 +2215,9 @@ Stop syncing this subscription on this channel.
 
 + Response 204
 
++ Response 404
 
+        If the channel does not exist
     
 # Group Channel Consumption
 
