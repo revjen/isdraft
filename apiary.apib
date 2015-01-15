@@ -2611,19 +2611,21 @@ A single Email object.
 
 The Email resource has the following attributes:
 
-- id
-- from_address
-- to_address
-- subject
-- body
-- vender_id
-- contact_uid
-- schedule_date
-- creation_date
-- modification_date
-- merged
-- validated
-- sent_date
+| Attribute | Type | Description |
+| --- | --- | --- |
+| `id` | string | Id of the email object|
+| `from_address` | string | Who should this email be sent from? |
+| `to_address` | string | Who should this email be sent to? |
+| `subject` | string | The subject line of the email |
+| `body` | string | The body of the email |
+| `vender_id` | string | The id of the submitting application |
+| `contact_uid` | string | The unique identifier for the contact who should be merged into this email |
+| `schedule_date` | date | The date and time this email should be sent out |
+| `creation_date` | date | The date this email was created in the system |
+| `modification_date` | date | The date this email was last modified |
+| `merged` | boolean | If the email has been through the merge process |
+| `validated` | boolean | If the email has been through the validation process |
+| `sent_date` | date | The date the email was sent ||
 
 The attributes *id*, *creation_date*, and *modification_date* are assigned by the Infusionsoft API at the moment the email record is created.  The attribute *modification_date* is updated by the Infusionsoft API every time there is an update to the email.  The attributes *merged*, *validated*, and *sent_date* are controlled by Infusionsoft API during the process of sending an email.
 
