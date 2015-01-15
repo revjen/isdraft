@@ -2563,3 +2563,237 @@ Persists the channel event in a database and sqs.
         {
             "message":"??"
         }
+        
+# Group Emails
+## Email Scheduling Service
+Email Scheduling Service is the way to send email via the Infusionsoft Small Business Success Platform.  By using the email scheduling service you gain the benefits of merging, validation, and the ability to schedule emails for future sending.
+
+With the Email endpoints you can search, create, put, patch and destroy emails for sending. 
+
+**NOTE:**  You may only create emails if you are an authenticated user. 
+
+## Email Creation [/emails] 
+### Create an Email [POST]
+To create an email simply provide the JSON hash of the email, containing at least the fields *from_address*, *to_address*, *subject*, *body*, *vendor_id* and *contact_uid*. The attribute *schedule_date* is optional, if it is not provided the system will send the email as soon as possible. The attributes *id*, *creation_date*, and *modification_date* are assigned by the Infusionsoft API at the moment the email record is created.  The attribute *modification_date* is updated by the Infusionsoft API every time there is an update to the email.  The attributes *merged*, *validated*, and *sent_date* are controlled by Infusionsoft API during the process of sending an email.
+
++ Request (application/json)
+
+        {
+            "from_address" : "from@example.com",
+            "to_address" : "to@example.com",
+            "subject" : "Some Cool Email",
+            "body" : "Check out my cool widgets!",
+            "vendor_id" : "WidgetsInc",
+            "contact_uid" : "b6def5bc-57ff-446c-a9a0-a4ad7266e680",
+            "schedule_date" : "2015-01-14T00:00:00.000Z"
+        }
+
++ Response 201 (application/json)
+
+        {
+            "id" : "123abc",
+            "from_address" : "from@example.com",
+            "to_address" : "to@example.com",
+            "subject" : "Some Cool Email",
+            "body" : "Check out my cool widgets!",
+            "vendor_id" : "WidgetsInc",
+            "contact_uid" : "b6def5bc-57ff-446c-a9a0-a4ad7266e680",
+            "schedule_date" : "2015-01-14T00:00:00.000Z",
+            "creation_date" : "2015-01-01T00:00:00.000Z",
+            "modification_date" : "2015-01-01T05:00:00.000Z",
+            "merged" : "0",
+            "validated" : "0",
+            "sent_date" : "2015-01-14T00:00:00.000Z"
+        }
+        
+## Email [/emails/{id}]
+A single Email object. 
+
+The Email resource has the following attributes:
+
+- id
+- from_address
+- to_address
+- subject
+- body
+- vender_id
+- contact_uid
+- schedule_date
+- creation_date
+- modification_date
+- merged
+- validated
+- sent_date
+
+The attributes *id*, *creation_date*, and *modification_date* are assigned by the Infusionsoft API at the moment the email record is created.  The attribute *modification_date* is updated by the Infusionsoft API every time there is an update to the email.  The attributes *merged*, *validated*, and *sent_date* are controlled by Infusionsoft API during the process of sending an email.
+
++ Parameters
+    + id (string) ... ID of the Email.
+
++ Model (application/json)
+
+    JSON representation of a Email Resource.
+
+    + Body
+    
+            {
+                "id" : "123abc",
+                "from_address" : "from@example.com",
+                "to_address" : "to@example.com",
+                "subject" : "Some Cool Email",
+                "body" : "Check out my cool widgets!",
+                "vendor_id" : "WidgetsInc",
+                "contact_uid" : "b6def5bc-57ff-446c-a9a0-a4ad7266e680",
+                "schedule_date" : "2015-01-14T00:00:00.000Z",
+                "creation_date" : "2015-01-01T00:00:00.000Z",
+                "modification_date" : "2015-01-01T05:00:00.000Z",
+                "merged" : "0",
+                "validated" : "0",
+                "sent_date" : "2015-01-14T00:00:00.000Z"
+            }
+
+### Retrieve an Email [GET]
+To retrieve a single email simply submit a request to the email endpoint with the email *id*. 
++ Response 200
+
+    [Email][]
+
+### Replace an Email [PUT]
+To replace an existing email send a JSON with one or more of the email resource attributes. Attribute values (states) from the previous version of this email will not be carried over. Any value not specified will be replaced with null. The attributes *merged* and *validated* will be reset and those processes rerun.  If *sent_date* is not null the replace will fail.
+
++ Request (application/json)
+
+        {
+            "from_address" : "from@example.com",
+            "to_address" : "to@example.com",
+            "subject" : "Some Cool Email",
+            "body" : "Check out my cool widgets!",
+            "vendor_id" : "WidgetsInc",
+            "contact_uid" : "b6def5bc-57ff-446c-a9a0-a4ad7266e680",
+            "schedule_date" : "2015-01-14T00:00:00.000Z"
+        }
+
++ Response 200
+
+    [Email][]
+    
++ Response 400
+
+        {   
+            "message" : "Unable to replace email, it has already been sent."
+        }
+
+### Update an Email [PATCH]
+To update an email send a JSON with one or more updated values of the email resource attributes. All attribute values (states) from the previous version of this email are carried over by default if not included in the hash.  If *sent_date* is not null the replace will fail.
+
++ Request (application/json)
+
+        {
+            "from_address" : "from@example.com"
+        }
+
++ Response 200
+
+    [Email][]
+    
++ Response 400
+
+        {   
+            "message" : "Unable to update email, it has already been sent."
+        }
+
+### Delete an Email [DELETE]
++ Response 201
+
+## Email Collection [/emails{?merged,validated,ready}]
+Retrieve a list of emails based on request parameters. Will return an empty array if no emails match your specified request parameters.
+
++ Model (application/json)
+
+    JSON representation of a Email Collection Resource.
+
+    + Body
+
+            {
+                "emails": [
+                    { 
+                        "id" : "123abc",
+                        "from_address" : "from@example.com",
+                        "to_address" : "to@example.com",
+                        "subject" : "Some Cool Email",
+                        "body" : "Check out my cool widgets!",
+                        "vendor_id" : "WidgetsInc",
+                        "contact_uid" : "b6def5bc-57ff-446c-a9a0-a4ad7266e680",
+                        "schedule_date" : "2015-01-14T00:00:00.000Z",
+                        "creation_date" : "2015-01-01T00:00:00.000Z",
+                        "modification_date" : "2015-01-01T05:00:00.000Z",
+                        "merged" : "1",
+                        "validated" : "1",
+                        "sent_date" : "2015-01-14T00:00:00.000Z"
+                    },
+                    { 
+                        "id" : "890xyz",
+                        "from_address" : "from@example.com",
+                        "to_address" : "to@example.com",
+                        "subject" : "Some Cool Email",
+                        "body" : "Check out my cool widgets!",
+                        "vendor_id" : "WidgetsInc",
+                        "contact_uid" : "b6def5bc-57ff-446c-a9a0-a4ad7266e680",
+                        "schedule_date" : "2015-01-14T00:00:00.000Z",
+                        "creation_date" : "2015-01-01T00:00:00.000Z",
+                        "modification_date" : "2015-01-01T05:00:00.000Z",
+                        "merged" : "1",
+                        "validated" : "1",
+                        "sent_date" : "2015-01-14T00:00:00.000Z"
+                    }
+                ]
+            }
+            
+### List all Emails [GET]
+The List endpoint returns an array of emails matching the request parameters you supplied. All parameters are optional. If you make a call to the List endpoint without passing any paramenters, the endpoint will return all emails that are pending send. If the optional parameters do not match any results, then an empty array will be returned.
+
++ Parameters
+    + merged (optional, boolean, `false`) ... When set to true the results will contain only emails that have been merged, false will return only emails that have not been merged.
+    + validated (optional, boolean, `false`) ... When set to true the results will contain only emails that have been validated, false will return only emails that have not been validated.
+    + ready (optional, boolean, `false`) ... When set to true the results will contain only emails that are ready for send (merged = true, validated = true, & schedule_date is before the current time), false will return only emails that are not ready for send.
+    
++ Response 200
+
+    [Email Collection][]    
+        
+        
+# Group Send Email
+## Email Sending Service
+Email Sending Service is a private service used by other services to send emails.
+
+**NOTE:**  Only authenticated services may send emails using this service.  Other services should use Email Scheduling Service. 
+
+## Email Sending [/sendEmail] 
+### Send an Email [POST]
+To send an email simply provide the JSON hash of the email, containing the fields *id*, *from_address*, *to_address*, *subject*, *body*, *vendor_id*, and *contact_uid*.
+
++ Request (application/json)
+
+        {
+            "id" : "123abc",
+            "from_address" : "from@example.com",
+            "to_address" : "to@example.com",
+            "subject" : "Some Cool Email",
+            "body" : "Check out my cool widgets!",
+            "vendor_id" : "WidgetsInc",
+            "contact_uid" : "b6def5bc-57ff-446c-a9a0-a4ad7266e680"
+        }
+
++ Response 200 (application/json)
+
+        {
+            "id" : "123abc",
+            "from_address" : "from@example.com",
+            "to_address" : "to@example.com",
+            "subject" : "Some Cool Email",
+            "body" : "Check out my cool widgets!",
+            "vendor_id" : "WidgetsInc",
+            "contact_uid" : "b6def5bc-57ff-446c-a9a0-a4ad7266e680",
+            "sent_date" : "2015-01-14T00:00:00.000Z",
+            "message" : "Email sent successfully"
+        }
