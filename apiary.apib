@@ -2572,9 +2572,31 @@ With the Email endpoints you can search, create, put, patch and destroy emails f
 
 **NOTE:**  You may only create emails if you are an authenticated user. 
 
+The Email resource has the following attributes:
+
+| Attribute | Type | Description |
+| --- | --- | --- |
+| `id` | string | Id of the email object|
+| `from_address` | string | Who should this email be sent from? |
+| `to_address` | string | Who should this email be sent to? |
+| `subject` | string | The subject line of the email |
+| `body` | string | The body of the email |
+| `vender_id` | string | The id of the submitting application |
+| `contact_uid` | string | The unique identifier for the contact who should be merged into this email |
+| `schedule_date` | date | The date and time this email should be sent out |
+| `creation_date` | date | The date this email was created in the system |
+| `modification_date` | date | The date this email was last modified |
+| `merge_status` | string | The status of the email with regard to the merge process |
+| `merge_message` | string | A message clarifying the *merge_status* |
+| `validation_status` | string | The status of the email with regard to the validation process |
+| `merge_message` | string | A message clarifying the *validation_status* |
+| `sent_date` | date | The date the email was sent ||
+
+The attributes *id*, *creation_date*, and *modification_date* are assigned by the Infusionsoft API at the moment the email record is created.  The attribute *modification_date* is updated by the Infusionsoft API every time there is an update to the email.  The attributes *merge_status*, *merge_message*, *validation_status*, *validation_message*, and *sent_date* are controlled by Infusionsoft API during the process of sending an email.
+
 ## Email Creation [/emails] 
 ### Create an Email [POST]
-To create an email simply provide the JSON hash of the email, containing at least the fields *from_address*, *to_address*, *subject*, *body*, *vendor_id* and *contact_uid*. The attribute *schedule_date* is optional, if it is not provided the system will send the email as soon as possible. The attributes *id*, *creation_date*, and *modification_date* are assigned by the Infusionsoft API at the moment the email record is created.  The attribute *modification_date* is updated by the Infusionsoft API every time there is an update to the email.  The attributes *merged*, *validated*, and *sent_date* are controlled by Infusionsoft API during the process of sending an email.
+To create an email simply provide the JSON hash of the email, containing at least the fields *from_address*, *to_address*, *subject*, *body*, *vendor_id* and *contact_uid*. The attribute *schedule_date* is optional, if it is not provided the system will send the email as soon as possible.
 
 + Request (application/json)
 
@@ -2601,33 +2623,15 @@ To create an email simply provide the JSON hash of the email, containing at leas
             "schedule_date" : "2015-01-14T00:00:00.000Z",
             "creation_date" : "2015-01-01T00:00:00.000Z",
             "modification_date" : "2015-01-01T05:00:00.000Z",
-            "merged" : "0",
-            "validated" : "0",
+            "merge_status" : "NeedsMerge",
+            "merge_message" : "Awaiting merge",
+            "validation_status" : "NeedsValidation",
+            "validation_message" : "Awaiting validation",
             "sent_date" : "2015-01-14T00:00:00.000Z"
         }
         
 ## Email [/emails/{id}]
 A single Email object. 
-
-The Email resource has the following attributes:
-
-| Attribute | Type | Description |
-| --- | --- | --- |
-| `id` | string | Id of the email object|
-| `from_address` | string | Who should this email be sent from? |
-| `to_address` | string | Who should this email be sent to? |
-| `subject` | string | The subject line of the email |
-| `body` | string | The body of the email |
-| `vender_id` | string | The id of the submitting application |
-| `contact_uid` | string | The unique identifier for the contact who should be merged into this email |
-| `schedule_date` | date | The date and time this email should be sent out |
-| `creation_date` | date | The date this email was created in the system |
-| `modification_date` | date | The date this email was last modified |
-| `merged` | boolean | If the email has been through the merge process |
-| `validated` | boolean | If the email has been through the validation process |
-| `sent_date` | date | The date the email was sent ||
-
-The attributes *id*, *creation_date*, and *modification_date* are assigned by the Infusionsoft API at the moment the email record is created.  The attribute *modification_date* is updated by the Infusionsoft API every time there is an update to the email.  The attributes *merged*, *validated*, and *sent_date* are controlled by Infusionsoft API during the process of sending an email.
 
 + Parameters
     + id (string) ... ID of the Email.
@@ -2649,8 +2653,10 @@ The attributes *id*, *creation_date*, and *modification_date* are assigned by th
                 "schedule_date" : "2015-01-14T00:00:00.000Z",
                 "creation_date" : "2015-01-01T00:00:00.000Z",
                 "modification_date" : "2015-01-01T05:00:00.000Z",
-                "merged" : "0",
-                "validated" : "0",
+                "merge_status" : "Merged",
+                "merge_message" : "Contact data merged successfully!",
+                "validation_status" : "NeedsValidation",
+                "validation_message" : "Awaiting validation",
                 "sent_date" : "2015-01-14T00:00:00.000Z"
             }
 
@@ -2729,8 +2735,10 @@ Retrieve a list of emails based on request parameters. Will return an empty arra
                         "schedule_date" : "2015-01-14T00:00:00.000Z",
                         "creation_date" : "2015-01-01T00:00:00.000Z",
                         "modification_date" : "2015-01-01T05:00:00.000Z",
-                        "merged" : "1",
-                        "validated" : "1",
+                        "merge_status" : "Merged",
+                        "merge_message" : "Contact data merged successfully!",
+                        "validation_status" : "Validated",
+                        "validation_message" : "Email validated successfully!",
                         "sent_date" : "2015-01-14T00:00:00.000Z"
                     },
                     { 
@@ -2744,8 +2752,10 @@ Retrieve a list of emails based on request parameters. Will return an empty arra
                         "schedule_date" : "2015-01-14T00:00:00.000Z",
                         "creation_date" : "2015-01-01T00:00:00.000Z",
                         "modification_date" : "2015-01-01T05:00:00.000Z",
-                        "merged" : "1",
-                        "validated" : "1",
+                        "merge_status" : "Merged",
+                        "merge_message" : "Contact data merged successfully!",
+                        "validation_status" : "Validated",
+                        "validation_message" : "Email validated successfully!",
                         "sent_date" : "2015-01-14T00:00:00.000Z"
                     }
                 ]
