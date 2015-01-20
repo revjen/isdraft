@@ -2589,7 +2589,7 @@ The Email resource has the following attributes:
 | `merge_status` | string | The status of the email with regard to the merge process |
 | `merge_message` | string | A message clarifying the *merge_status* |
 | `validation_status` | string | The status of the email with regard to the validation process |
-| `merge_message` | string | A message clarifying the *validation_status* |
+| `validation_message` | string | A message clarifying the *validation_status* |
 | `sent_date` | date | The date the email was sent ||
 
 The attributes *id*, *creation_date*, and *modification_date* are assigned by the Infusionsoft API at the moment the email record is created.  The attribute *modification_date* is updated by the Infusionsoft API every time there is an update to the email.  The attributes *merge_status*, *merge_message*, *validation_status*, *validation_message*, and *sent_date* are controlled by Infusionsoft API during the process of sending an email.
