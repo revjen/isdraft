@@ -2765,13 +2765,13 @@ Retrieve a list of emails based on request parameters. Will return an empty arra
 The List endpoint returns an array of emails matching the request parameters you supplied. All parameters are optional. If you make a call to the List endpoint without passing any paramenters, the endpoint will return all emails that are pending send. If the optional parameters do not match any results, then an empty array will be returned.
 
 + Parameters
-    + merged (optional, boolean, `false`) ... When set to true the results will contain only emails that have been merged, false will return only emails that have not been merged.
-    + validated (optional, boolean, `false`) ... When set to true the results will contain only emails that have been validated, false will return only emails that have not been validated.
-    + ready (optional, boolean, `false`) ... When set to true the results will contain only emails that are ready for send (merged = true, validated = true, & schedule_date is before the current time), false will return only emails that are not ready for send.
+    + merged (optional, string, `NotMerged`) ... This value will be used to query the *merge_status* attribute looking for a match.
+    + validated (optional, string, `NotValidated`) ... This value will be used to query the *merge_status* attribute looking for a match.
+    + ready (optional, boolean, `false`) ... When set to true the results will contain only emails that are ready for send (*merge_status* = Merged, *validation_status* = Validated, & schedule_date is before the current time), false will return only emails that are not ready for send.
     
 + Response 200
 
-    [Email Collection][]    
+    [Email Collection][]      
         
         
 # Group Send Email
