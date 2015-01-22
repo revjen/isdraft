@@ -2565,8 +2565,8 @@ Persists the channel event in a database and sqs.
         }
         
 # Group Emails
-## Email Scheduling Service
-Email Scheduling Service is the way to send email via the Infusionsoft Small Business Success Platform.  By using the email scheduling service you gain the benefits of merging, validation, and the ability to schedule emails for future sending.
+## Email Sending Service
+Email Sending Service is the way to send email via the Infusionsoft Small Business Success Platform.  By using the email sending service you gain the benefits of merging, validation, and the ability to schedule emails for future sending.
 
 With the Email endpoints you can search, create, put, patch and destroy emails for sending. 
 
@@ -2576,14 +2576,13 @@ The Email resource has the following attributes:
 
 | Attribute | Type | Description |
 | --- | --- | --- |
-| `id` | string | Id of the email object|
+| `token` | string | Token of the email object|
 | `from_address` | string | Who should this email be sent from? |
 | `to_address` | string | Who should this email be sent to? |
 | `subject` | string | The subject line of the email |
 | `body` | string | The body of the email |
 | `vender_id` | string | The id of the submitting application |
 | `contact_uid` | string | The unique identifier for the contact who should be merged into this email |
-| `schedule_date` | date | The date and time this email should be sent out |
 | `creation_date` | date | The date this email was created in the system |
 | `modification_date` | date | The date this email was last modified |
 | `merge_status` | string | The status of the email with regard to the merge process |
@@ -2592,11 +2591,11 @@ The Email resource has the following attributes:
 | `validation_message` | string | A message clarifying the *validation_status* |
 | `sent_date` | date | The date the email was sent ||
 
-The attributes *id*, *creation_date*, and *modification_date* are assigned by the Infusionsoft API at the moment the email record is created.  The attribute *modification_date* is updated by the Infusionsoft API every time there is an update to the email.  The attributes *merge_status*, *merge_message*, *validation_status*, *validation_message*, and *sent_date* are controlled by Infusionsoft API during the process of sending an email.
+The attributes *token*, *creation_date*, and *modification_date* are assigned by the Infusionsoft API at the moment the email record is created.  The attribute *modification_date* is updated by the Infusionsoft API every time there is an update to the email.  The attributes *merge_status*, *merge_message*, *validation_status*, *validation_message*, and *sent_date* are controlled by Infusionsoft API during the process of sending an email.
 
 ## Email Creation [/emails] 
 ### Create an Email [POST]
-To create an email simply provide the JSON hash of the email, containing at least the fields *from_address*, *to_address*, *subject*, *body*, *vendor_id* and *contact_uid*. The attribute *schedule_date* is optional, if it is not provided the system will send the email as soon as possible.
+To create an email simply provide the JSON hash of the email, containing at least the fields *from_address*, *to_address*, *subject*, *body*, *vendor_id* and *contact_uid*.
 
 + Request (application/json)
 
@@ -2605,36 +2604,34 @@ To create an email simply provide the JSON hash of the email, containing at leas
             "to_address" : "to@example.com",
             "subject" : "Some Cool Email",
             "body" : "Check out my cool widgets!",
-            "vendor_id" : "WidgetsInc",
-            "contact_uid" : "b6def5bc-57ff-446c-a9a0-a4ad7266e680",
-            "schedule_date" : "2015-01-14T00:00:00.000Z"
+            "account_uid" : "WidgetsInc",
+            "contact_uid" : "b6def5bc-57ff-446c-a9a0-a4ad7266e680"
         }
 
 + Response 201 (application/json)
 
         {
-            "id" : "123abc",
+            "token" : "bceef15f-65e0-4e7b-af1d-904f0afed520",
             "from_address" : "from@example.com",
             "to_address" : "to@example.com",
             "subject" : "Some Cool Email",
             "body" : "Check out my cool widgets!",
-            "vendor_id" : "WidgetsInc",
+            "account_uid" : "4373df74-b58a-4c42-8751-6ae35e6669d3",
             "contact_uid" : "b6def5bc-57ff-446c-a9a0-a4ad7266e680",
-            "schedule_date" : "2015-01-14T00:00:00.000Z",
             "creation_date" : "2015-01-01T00:00:00.000Z",
-            "modification_date" : "2015-01-01T05:00:00.000Z",
+            "modification_date" : "2015-01-01T00:00:00.000Z",
             "merge_status" : "NeedsMerge",
-            "merge_message" : "Awaiting merge",
+            "merge_message" : "",
             "validation_status" : "NeedsValidation",
-            "validation_message" : "Awaiting validation",
-            "sent_date" : "2015-01-14T00:00:00.000Z"
+            "validation_message" : "",
+            "sent_date" : ""
         }
         
-## Email [/emails/{id}]
+## Email [/emails/{token}]
 A single Email object. 
 
 + Parameters
-    + id (string) ... ID of the Email.
+    + token (string) ... token of the Email.
 
 + Model (application/json)
 
@@ -2643,21 +2640,20 @@ A single Email object.
     + Body
     
             {
-                "id" : "123abc",
+                "token" : "bceef15f-65e0-4e7b-af1d-904f0afed520",
                 "from_address" : "from@example.com",
                 "to_address" : "to@example.com",
                 "subject" : "Some Cool Email",
                 "body" : "Check out my cool widgets!",
-                "vendor_id" : "WidgetsInc",
+                "account_uid" : "4373df74-b58a-4c42-8751-6ae35e6669d3",
                 "contact_uid" : "b6def5bc-57ff-446c-a9a0-a4ad7266e680",
-                "schedule_date" : "2015-01-14T00:00:00.000Z",
                 "creation_date" : "2015-01-01T00:00:00.000Z",
-                "modification_date" : "2015-01-01T05:00:00.000Z",
+                "modification_date" : "2015-01-01T00:00:00.000Z",
                 "merge_status" : "Merged",
                 "merge_message" : "Contact data merged successfully!",
                 "validation_status" : "NeedsValidation",
-                "validation_message" : "Awaiting validation",
-                "sent_date" : "2015-01-14T00:00:00.000Z"
+                "validation_message" : "",
+                "sent_date" : ""
             }
 
 ### Retrieve an Email [GET]
@@ -2676,9 +2672,8 @@ To replace an existing email send a JSON with one or more of the email resource 
             "to_address" : "to@example.com",
             "subject" : "Some Cool Email",
             "body" : "Check out my cool widgets!",
-            "vendor_id" : "WidgetsInc",
-            "contact_uid" : "b6def5bc-57ff-446c-a9a0-a4ad7266e680",
-            "schedule_date" : "2015-01-14T00:00:00.000Z"
+            "account_uid" : "4373df74-b58a-4c42-8751-6ae35e6669d3",
+            "contact_uid" : "b6def5bc-57ff-446c-a9a0-a4ad7266e680"
         }
 
 + Response 200
@@ -2713,7 +2708,7 @@ To update an email send a JSON with one or more updated values of the email reso
 ### Delete an Email [DELETE]
 + Response 201
 
-## Email Collection [/emails{?merged,validated,ready}]
+## Email Collection [/emails{?mergeStatus,validationStatus,readyForSend}]
 Retrieve a list of emails based on request parameters. Will return an empty array if no emails match your specified request parameters.
 
 + Model (application/json)
@@ -2725,87 +2720,75 @@ Retrieve a list of emails based on request parameters. Will return an empty arra
             {
                 "emails": [
                     { 
-                        "id" : "123abc",
+                        "token" : "bceef15f-65e0-4e7b-af1d-904f0afed520",
                         "from_address" : "from@example.com",
                         "to_address" : "to@example.com",
                         "subject" : "Some Cool Email",
                         "body" : "Check out my cool widgets!",
-                        "vendor_id" : "WidgetsInc",
+                        "account_uid" : "4373df74-b58a-4c42-8751-6ae35e6669d3",
                         "contact_uid" : "b6def5bc-57ff-446c-a9a0-a4ad7266e680",
-                        "schedule_date" : "2015-01-14T00:00:00.000Z",
                         "creation_date" : "2015-01-01T00:00:00.000Z",
-                        "modification_date" : "2015-01-01T05:00:00.000Z",
+                        "modification_date" : "2015-01-01T00:00:00.000Z",
                         "merge_status" : "Merged",
                         "merge_message" : "Contact data merged successfully!",
                         "validation_status" : "Validated",
                         "validation_message" : "Email validated successfully!",
-                        "sent_date" : "2015-01-14T00:00:00.000Z"
+                        "sent_date" : "2015-01-01T00:00:00.000Z"
                     },
                     { 
-                        "id" : "890xyz",
+                        "token" : "cdc36f8a-f4ff-46ca-b8bd-b8a9c01fef9a",
                         "from_address" : "from@example.com",
                         "to_address" : "to@example.com",
                         "subject" : "Some Cool Email",
                         "body" : "Check out my cool widgets!",
-                        "vendor_id" : "WidgetsInc",
+                        "account_uid" : "4373df74-b58a-4c42-8751-6ae35e6669d3",
                         "contact_uid" : "b6def5bc-57ff-446c-a9a0-a4ad7266e680",
-                        "schedule_date" : "2015-01-14T00:00:00.000Z",
                         "creation_date" : "2015-01-01T00:00:00.000Z",
-                        "modification_date" : "2015-01-01T05:00:00.000Z",
+                        "modification_date" : "2015-01-01T00:00:00.000Z",
                         "merge_status" : "Merged",
                         "merge_message" : "Contact data merged successfully!",
                         "validation_status" : "Validated",
                         "validation_message" : "Email validated successfully!",
-                        "sent_date" : "2015-01-14T00:00:00.000Z"
+                        "sent_date" : "2015-01-01T00:00:00.000Z"
                     }
                 ]
             }
             
-### List all Emails [GET]
+### List Emails [GET]
 The List endpoint returns an array of emails matching the request parameters you supplied. All parameters are optional. If you make a call to the List endpoint without passing any paramenters, the endpoint will return all emails that are pending send. If the optional parameters do not match any results, then an empty array will be returned.
 
 + Parameters
-    + merged (optional, string, `NotMerged`) ... This value will be used to query the *merge_status* attribute looking for a match.
-    + validated (optional, string, `NotValidated`) ... This value will be used to query the *merge_status* attribute looking for a match.
-    + ready (optional, boolean, `false`) ... When set to true the results will contain only emails that are ready for send (*merge_status* = Merged, *validation_status* = Validated, & schedule_date is before the current time), false will return only emails that are not ready for send.
+    + mergeStatus (optional, string, `NotMerged`) ... This value will be used to query the *merge_status* attribute looking for a match.
+    + validationStatus (optional, string, `NotValidated`) ... This value will be used to query the *validation_status* attribute looking for a match.
+    + readyForSend (optional, boolean, `false`) ... When set to true the results will contain only emails that are ready for send (*merge_status* = Merged, *validation_status* = Validated, & schedule_date is before the current time), false will return only emails that are not ready for send. This parameter overrides *mergeStatus* and *validationStatus*.
     
 + Response 200
 
-    [Email Collection][]      
-        
-        
-# Group Send Email
-## Email Sending Service
-Email Sending Service is a private service used by other services to send emails.
-
-**NOTE:**  Only authenticated services may send emails using this service.  Other services should use Email Scheduling Service. 
-
-## Email Sending [/sendEmail] 
+    [Email Collection][]  
+    
+## Email Sending [/sendEmail/{token}] 
 ### Send an Email [POST]
-To send an email simply provide the JSON hash of the email, containing the fields *id*, *from_address*, *to_address*, *subject*, *body*, *vendor_id*, and *contact_uid*.
+To send an email simply provide the token of the email you wish to send.
 
-+ Request (application/json)
-
-        {
-            "id" : "123abc",
-            "from_address" : "from@example.com",
-            "to_address" : "to@example.com",
-            "subject" : "Some Cool Email",
-            "body" : "Check out my cool widgets!",
-            "vendor_id" : "WidgetsInc",
-            "contact_uid" : "b6def5bc-57ff-446c-a9a0-a4ad7266e680"
-        }
++ Parameters
+    + token (string) ... token of the Email.
 
 + Response 200 (application/json)
 
-        {
-            "id" : "123abc",
+        { 
+            "token" : "bceef15f-65e0-4e7b-af1d-904f0afed520",
             "from_address" : "from@example.com",
             "to_address" : "to@example.com",
             "subject" : "Some Cool Email",
             "body" : "Check out my cool widgets!",
-            "vendor_id" : "WidgetsInc",
+            "account_uid" : "4373df74-b58a-4c42-8751-6ae35e6669d3",
             "contact_uid" : "b6def5bc-57ff-446c-a9a0-a4ad7266e680",
-            "sent_date" : "2015-01-14T00:00:00.000Z",
-            "message" : "Email sent successfully"
+            "creation_date" : "2015-01-01T00:00:00.000Z",
+            "modification_date" : "2015-01-01T00:00:00.000Z",
+            "merge_status" : "Merged",
+            "merge_message" : "Contact data merged successfully!",
+            "validation_status" : "Validated",
+            "validation_message" : "Email validated successfully!",
+            "sent_date" : "2015-01-01T00:00:00.000Z"
         }
+     
