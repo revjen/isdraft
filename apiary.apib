@@ -2717,42 +2717,40 @@ Retrieve a list of emails based on request parameters. Will return an empty arra
 
     + Body
 
-            {
-                "emails": [
-                    { 
-                        "token" : "bceef15f-65e0-4e7b-af1d-904f0afed520",
-                        "from_address" : "from@example.com",
-                        "to_address" : "to@example.com",
-                        "subject" : "Some Cool Email",
-                        "body" : "Check out my cool widgets!",
-                        "account_uid" : "4373df74-b58a-4c42-8751-6ae35e6669d3",
-                        "contact_uid" : "b6def5bc-57ff-446c-a9a0-a4ad7266e680",
-                        "creation_date" : "2015-01-01T00:00:00.000Z",
-                        "modification_date" : "2015-01-01T00:00:00.000Z",
-                        "merge_status" : "Merged",
-                        "merge_message" : "Contact data merged successfully!",
-                        "validation_status" : "Validated",
-                        "validation_message" : "Email validated successfully!",
-                        "sent_date" : "2015-01-01T00:00:00.000Z"
-                    },
-                    { 
-                        "token" : "cdc36f8a-f4ff-46ca-b8bd-b8a9c01fef9a",
-                        "from_address" : "from@example.com",
-                        "to_address" : "to@example.com",
-                        "subject" : "Some Cool Email",
-                        "body" : "Check out my cool widgets!",
-                        "account_uid" : "4373df74-b58a-4c42-8751-6ae35e6669d3",
-                        "contact_uid" : "b6def5bc-57ff-446c-a9a0-a4ad7266e680",
-                        "creation_date" : "2015-01-01T00:00:00.000Z",
-                        "modification_date" : "2015-01-01T00:00:00.000Z",
-                        "merge_status" : "Merged",
-                        "merge_message" : "Contact data merged successfully!",
-                        "validation_status" : "Validated",
-                        "validation_message" : "Email validated successfully!",
-                        "sent_date" : "2015-01-01T00:00:00.000Z"
-                    }
-                ]
-            }
+            [
+                { 
+                    "token" : "bceef15f-65e0-4e7b-af1d-904f0afed520",
+                    "from_address" : "from@example.com",
+                    "to_address" : "to@example.com",
+                    "subject" : "Some Cool Email",
+                    "body" : "Check out my cool widgets!",
+                    "account_uid" : "4373df74-b58a-4c42-8751-6ae35e6669d3",
+                    "contact_uid" : "b6def5bc-57ff-446c-a9a0-a4ad7266e680",
+                    "creation_date" : "2015-01-01T00:00:00.000Z",
+                    "modification_date" : "2015-01-01T00:00:00.000Z",
+                    "merge_status" : "Merged",
+                    "merge_message" : "Contact data merged successfully!",
+                    "validation_status" : "Validated",
+                    "validation_message" : "Email validated successfully!",
+                    "sent_date" : "2015-01-01T00:00:00.000Z"
+                },
+                { 
+                    "token" : "cdc36f8a-f4ff-46ca-b8bd-b8a9c01fef9a",
+                    "from_address" : "from@example.com",
+                    "to_address" : "to@example.com",
+                    "subject" : "Some Cool Email",
+                    "body" : "Check out my cool widgets!",
+                    "account_uid" : "4373df74-b58a-4c42-8751-6ae35e6669d3",
+                    "contact_uid" : "b6def5bc-57ff-446c-a9a0-a4ad7266e680",
+                    "creation_date" : "2015-01-01T00:00:00.000Z",
+                    "modification_date" : "2015-01-01T00:00:00.000Z",
+                    "merge_status" : "Merged",
+                    "merge_message" : "Contact data merged successfully!",
+                    "validation_status" : "Validated",
+                    "validation_message" : "Email validated successfully!",
+                    "sent_date" : "2015-01-01T00:00:00.000Z"
+                }
+            ]
             
 ### List Emails [GET]
 The List endpoint returns an array of emails matching the request parameters you supplied. All parameters are optional. If you make a call to the List endpoint without passing any paramenters, the endpoint will return all emails that are pending send. If the optional parameters do not match any results, then an empty array will be returned.
