@@ -2458,8 +2458,6 @@ The Channel Event Service provides endpoints for the Sync Engine to persist and 
 
 All Channel Events will contain the following attributes. 
 
-Channel Event
-
 | attribute | type | Description |
 | --- | --- | --- |
 | `channel_name`|string|The channel name|
@@ -2478,7 +2476,8 @@ Depending on the type of Channel Event, additional attributes will be present (d
 
 The Communication Event resource represents an event dealing with communication.
 
-In addition to the attributes present in Channel Event, this event provides the following attributes: 
+In addition to the attributes present in Channel Event, this event provides the following attributes.
+
 | attribute | type | Description |
 | --- | --- | --- |
 | `summary` | string | A summary of the event |
@@ -2596,7 +2595,8 @@ The endpoint returns an array of communication events matching the parameters yo
 
 The Commerce Order Created Event resource represents an event relating to an order that has been made.
 
-In addition to the attributes present in Channel Event, this event provides the following attributes: 
+In addition to the attributes present in Channel Event, this event provides the following attributes.
+
 | attribute | type | Description |
 | --- | --- | --- |
 | `amount` | double | The amount of the transaction |
@@ -2650,7 +2650,7 @@ The endpoint returns an array of order created events matching the parameters yo
 
 The Commerce Transaction Event resource represents an event relating to a commerce transaction.
 
-In addition to the attributes present in Channel Event, this event provides the following attributes: 
+In addition to the attributes present in Channel Event, this event provides the following attributes. 
 
 | attribute | type | Description |
 | --- | --- | --- |
