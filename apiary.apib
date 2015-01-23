@@ -2456,34 +2456,51 @@ Executes the previously registered transformation script for a particular channe
 
 The Channel Event Service provides endpoints for the Sync Engine to persist and queue a channel event.
 
-## Resource Channel Event [/rest/v1/chanel_events]
+All Channel Events will contain the following attributes. 
 
-A Channel Event resource will contain the following attributes and the type will depend on the string in the type field e.g. 'communication' or 'commerce':
-
-Communication Event
+Channel Event
 
 | attribute | type | Description |
 | --- | --- | --- |
-| `type` | string | 'communication' |
+| `channel_name`|string|The channel name|
+| `credentials_id`|string|The credentials id|
 | `event_id` | string | Unique identifier for the event |
-| `participants` | nested resource |  |
-| `event_type` | string | The event type |
+| `event_type` | string | The type of event. Currently can be one of: 'communication', 'commerce', ot 'transaction'|
+| `url` | string | The url associated with the event |
 | `event_date` | date | The date in which the event occurred |
+| `response_to_event_id` | string | The original event id in which this event is associated with |
+| `participants` | nested resource |  A list of participants associated with this event|
+
+
+Depending on the type of Channel Event, additional attributes will be present (dtails of each attribute provided in their respective sections)
+
+## Resource Communication Event [/rest/v1/events/communication]
+
+The Communication Event represents an event dealing with communication.
+
+In addition to the attributes present in Channel Event, this event provides the following attributes: 
+| attribute | type | Description |
+| --- | --- | --- |
 | `summary` | string | A summary of the event |
 | `text` | string | The text of the event |
 | `html` | string | Any html associated with the event |
-| `url` | string | The url associated with the event |
 | `linked_urls` | list | A list of url strings associated with the event |
-| `response_to_event_id` | string | The original event id in which this event is associated with |
 
-
-Commerce Event
+Commerce Order Created Event
 
 | attribute | type | Description |
 | --- | --- | --- |
-| `type` | string | 'commerce' |
+| `amount` | double | The amount of the transaction |
+| `currency` | string | The currency type of the transaction |
+| `created_date` | date | The date in which the transactionorder was created |
+| `note` | string | Any note present on the transaction |
+| `order` | nested resource | The details of the order |
+
+Commerce Transaction Event
+
+| attribute | type | Description |
+| --- | --- | --- |
 | `transaction_id` | string | Unique identifier for the event |
-| `participants` | nested resource |  |
 | `transaction_type` | string | A string indicating the type of transaction 'Payment','Refund','Credit' |
 | `amount` | double | The amount of the transaction |
 | `currency` | string | The currency type of the transaction |
@@ -2493,9 +2510,10 @@ Commerce Event
 | `status` | string | A string indicating the status of the transaction 'Pending','Success','Failure','Error' |
 | `authorization` | string | The transaction authorization |
 | `errors` | list | A list of strings indicating the errors involved in the transaction |
-| `created_date` | date | The date in which the transaction was created |
+| `created_date` | date | The date in which the transactionorder was created |
 | `note` | string | Any note present on the transaction |
-| `order` | nested resource | |
+| `order` | nested resource |The details of the order |
+
 
 ### Create Channel Event [POST] 
 Persists the channel event in a database and sqs.
