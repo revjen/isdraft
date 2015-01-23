@@ -2474,9 +2474,9 @@ Channel Event
 
 Depending on the type of Channel Event, additional attributes will be present (dtails of each attribute provided in their respective sections)
 
-## Resource Communication Event [/rest/v1/events/communication]
+## Resource Communication Event [/rest/v1/events/communication{?since,until}]
 
-The Communication Event represents an event dealing with communication.
+The Communication Event resource represents an event dealing with communication.
 
 In addition to the attributes present in Channel Event, this event provides the following attributes: 
 | attribute | type | Description |
@@ -2486,37 +2486,9 @@ In addition to the attributes present in Channel Event, this event provides the 
 | `html` | string | Any html associated with the event |
 | `linked_urls` | list | A list of url strings associated with the event |
 
-Commerce Order Created Event
 
-| attribute | type | Description |
-| --- | --- | --- |
-| `amount` | double | The amount of the transaction |
-| `currency` | string | The currency type of the transaction |
-| `created_date` | date | The date in which the transactionorder was created |
-| `note` | string | Any note present on the transaction |
-| `order` | nested resource | The details of the order |
-
-Commerce Transaction Event
-
-| attribute | type | Description |
-| --- | --- | --- |
-| `transaction_id` | string | Unique identifier for the event |
-| `transaction_type` | string | A string indicating the type of transaction 'Payment','Refund','Credit' |
-| `amount` | double | The amount of the transaction |
-| `currency` | string | The currency type of the transaction |
-| `test` | boolean | True if the transaction was a test |
-| `gateway` | string | The payment gateway that provided authorization |
-| `collection_method` | string | A string indicating the collection method of the transaction 'Cash','Check','CreditCard','MoneyOrder','Other' |
-| `status` | string | A string indicating the status of the transaction 'Pending','Success','Failure','Error' |
-| `authorization` | string | The transaction authorization |
-| `errors` | list | A list of strings indicating the errors involved in the transaction |
-| `created_date` | date | The date in which the transactionorder was created |
-| `note` | string | Any note present on the transaction |
-| `order` | nested resource |The details of the order |
-
-
-### Create Channel Event [POST] 
-Persists the channel event in a database and sqs.
+### Create a communication event [POST] 
+Persists the communication event in a database and sqs.
 
 + Request (application/json)
 
@@ -2582,6 +2554,163 @@ Persists the channel event in a database and sqs.
             "message":"??"
         }
         
+        
+### List all communication events [GET]
+The endpoint returns an array of communication events matching the parameters you supplied. If the optional parameters to not match any results, then an empty array will be returned.
+
++ Parameters
+    + since (required, dateTime, `2014-06-01T17:00:00.000Z`) ... Lower bound limit for the task expressed as a timestamp in ISO 8601 format: `YYYY-MM-DDTHH:MM:SSZ`.
+    + until (optional, dateTime, `2014-08-31T17:00:00.000Z`) ... Upper bound limit for the task expressed as a timestamp in ISO 8601 format: `YYYY-MM-DDTHH:MM:SSZ`. Will use current server time if not provided.
+
++ Response 200
+
+        {
+            "communication_events":[{
+                "event_type": "communication",
+                "event_id": "213797324",
+                "activity_type": "faceboook-link-comment",
+                "activity_id": "438039285043985_834293749237489327",
+                "description": "",
+                "content": "Their Midas Touch is definitely one of my top three beers of all time! #tasty",
+                "content_html": "",
+                "content_url": "",
+                "response_to_activity_type": "link",
+                "response_to_activity_id": "50923485903428509348_498237598347895743",
+                "participants":[{
+                    "identifier": "4523465475638765765765",
+                    "name": "Paul Sokol",
+                    "interaction_type": "From",
+                    "first_name": "Paul",
+                    "last_name": "Sokol",
+                    "identity_alias": "paul.sokol85",
+                    "gender": "male",
+                    "locale": "fb_LT",
+                    "url": "https://www.facebook.com/paul.sokol85",
+                    "photo_url": "https://graph.facebook.com/425645634575375/picture?type=large",
+                    "cover_url": null
+                }]
+            }]
+        }
+
+## Resource Commerce Order Created Event [/rest/v1/events/commerce_order_created{?since,until}]                
+
+The Commerce Order Created Event resource represents an event relating to an order that has been made.
+
+In addition to the attributes present in Channel Event, this event provides the following attributes: 
+| attribute | type | Description |
+| --- | --- | --- |
+| `amount` | double | The amount of the transaction |
+| `currency` | string | The currency type of the transaction |
+| `created_date` | date | The date in which the transactionorder was created |
+| `note` | string | Any note present on the transaction |
+| `order` | nested resource | The details of the order |
+
+### Create a commerce order created event [POST] 
+Persists the commerce order created event in a database and sqs.
+
++ Request (application/json)
+
+        {
+            "TODO": "fill in data"
+        }
+
++ Response 200
+
+        {
+            "TODO": "fill in data"
+        }
+
++ Response 500
+
+        {
+            "message":"??"
+        }
+        
+        
+### List all commerce order created events [GET]
+
+The endpoint returns an array of order created events matching the parameters you supplied. If the optional parameters to not match any results, then an empty array will be returned.
+
++ Parameters
+    + since (required, dateTime, `2014-06-01T17:00:00.000Z`) ... Lower bound limit for the task expressed as a timestamp in ISO 8601 format: `YYYY-MM-DDTHH:MM:SSZ`.
+    + until (optional, dateTime, `2014-08-31T17:00:00.000Z`) ... Upper bound limit for the task expressed as a timestamp in ISO 8601 format: `YYYY-MM-DDTHH:MM:SSZ`. Will use current server time if not provided.
+
++ Response 200
+
+        {
+            "order_created_events":[{
+                "TODO": "fill in data",
+                "participants":[{
+                    "TODO": "fill in data"
+                }]
+            }]
+        }
+
+## Resource Commerce Transaction Event [/rest/v1/events/commerce_transaction{?since,until}]                
+
+The Commerce Transaction Event resource represents an event relating to a commerce transaction.
+
+In addition to the attributes present in Channel Event, this event provides the following attributes: 
+
+| attribute | type | Description |
+| --- | --- | --- |
+| `transaction_id` | string | Unique identifier for the event |
+| `transaction_type` | string | A string indicating the type of transaction 'Payment','Refund','Credit' |
+| `amount` | double | The amount of the transaction |
+| `currency` | string | The currency type of the transaction |
+| `test` | boolean | True if the transaction was a test |
+| `gateway` | string | The payment gateway that provided authorization |
+| `collection_method` | string | A string indicating the collection method of the transaction 'Cash','Check','CreditCard','MoneyOrder','Other' |
+| `status` | string | A string indicating the status of the transaction 'Pending','Success','Failure','Error' |
+| `authorization` | string | The transaction authorization |
+| `errors` | list | A list of strings indicating the errors involved in the transaction |
+| `created_date` | date | The date in which the transactionorder was created |
+| `note` | string | Any note present on the transaction |
+| `order` | nested resource |The details of the order |
+
+
+### Create a commerce transaction event [POST] 
+Persists the commerce transaction event in a database and sqs.
+
++ Request (application/json)
+
+        {
+            "TODO": "fill in data"
+        }
+
++ Response 200
+
+        {
+            "TODO": "fill in data"
+        }
+
++ Response 500
+
+        {
+            "message":"??"
+        }
+        
+        
+### List all commerce transaction events [GET]
+
+The endpoint returns an array of transaction events matching the parameters you supplied. If the optional parameters to not match any results, then an empty array will be returned.
+
++ Parameters
+    + since (required, dateTime, `2014-06-01T17:00:00.000Z`) ... Lower bound limit for the task expressed as a timestamp in ISO 8601 format: `YYYY-MM-DDTHH:MM:SSZ`.
+    + until (optional, dateTime, `2014-08-31T17:00:00.000Z`) ... Upper bound limit for the task expressed as a timestamp in ISO 8601 format: `YYYY-MM-DDTHH:MM:SSZ`. Will use current server time if not provided.
+
++ Response 200
+
+        {
+            "commerce_transaction_events":[{
+                "TODO": "fill in data",
+                "participants":[{
+                    "TODO": "fill in data"
+                }]
+            }]
+        }
+
+
 # Group Emails
 ## Email Sending Service
 Email Sending Service is the way to send email via the Infusionsoft Small Business Success Platform.  By using the email sending service you gain the benefits of merging, validation, and the ability to schedule emails for future sending.
