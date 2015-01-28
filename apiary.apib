@@ -2007,8 +2007,8 @@ Returns all Valid Notification Types
         ]
 
 
-# Group Channel Management
-The Channel Management Service provides endpoints into the Sync Engine where new channels are registered/de-registered. and subscriptions on those channels are maintained. 
+# Group Sync Channel
+The Sync Channel Service provides endpoints into the Sync Engine where new channels are registered/de-registered. and subscriptions on those channels are maintained. 
 Statuses of particualar channel-subscriptions can be acquired, and maybe summaries of all the channels and thier overall status.
 
 ## Channel [/rest/v1/channels]
@@ -2219,9 +2219,9 @@ Stop syncing this subscription on this channel.
 
         If the channel does not exist
     
-# Group Channel Consumption
+# Group Sync Execution
 
-The Channel Consumption Service provides endpoints for the Sync Engine to get a channel subscription for consumption and update for consumption completion.
+The Sync Execution Service provides endpoints for the Sync Engine to get the next execution to perform, or submit new executions to be queued.
 
 ## Resource Channel Execution [/rest/v1/channel_executions]
 
@@ -2452,9 +2452,9 @@ Executes the previously registered transformation script for a particular channe
             "message":"??"
         }
         
-# Group Channel Event
+# Group Sync Event
 
-The Channel Event Service provides endpoints for the Sync Engine to persist and queue a channel event.
+The Sync Event Service provides endpoints for the Sync Engine to persist and queue a channel event.
 
 All Channel Events will contain the following attributes. 
 
