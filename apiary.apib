@@ -2019,8 +2019,8 @@ The Channel resource contains the following attributes:
 | --- | --- | --- |
 | `id` | UUID | The unique identifier for the resource |
 | `name` | string | The name of the channel |
+| `function_name` | string | The name of the function to pass to script execution service |
 | `type` | string | The channel type. Currently supported types are: "PERIODIC" |
-| `extract_transform_script` | string | java script code to perform loading raw data from the channel, and transforming the unit of raw data into the Infusionsoft canonical form. |
 
 + Model (application/json)
 
@@ -2031,8 +2031,8 @@ The Channel resource contains the following attributes:
             {
                 "id": "6daf6e80-796c-11e4-9d86-07108d192dc8",
                 "name":"twitter",
-                "type":"PERIODIC"
-                "extract_transform_script":"load the stuff from the channel; convert to canonical form;"
+                "type":"PERIODIC",
+                "function_name": "periodic"
             }
 
 
@@ -2042,8 +2042,8 @@ Register a channel.
 
         {
             "name":"twitter",
-            "type":"PERIODIC"
-            "extract_transform_script":"load the stuff from the channel; convert to canonical form;"
+            "type":"PERIODIC",
+            "function_name": "periodic"
         }
 
 + Response 201 (application/json)
@@ -2077,12 +2077,12 @@ Returns a list of all registered channels.
                 {
                     "name":"twitter",
                     "type":"PERIODIC",
-                    "extract_transform_script":"load the stuff from the channel; convert to canonical form;"
+                    "function_name": "periodic"
                 },
                 {
                     "name":"theface",
                     "type":"STREAMING",
-                    "extract_transform_script":"load the stuff from the channel; convert to canonical form;"
+                    "function_name": "periodic"
                 }
             ]
         }
@@ -2126,14 +2126,14 @@ The Channel Subscription resource contains the following attributes:
 | --- | --- | --- |
 | `id` | UUID | The unique identifier for the resource |
 | `credentials_id` | string | The identifier to the account credentials |
-| `channel_id` |string | The id of the channel which was subscribed |
+| `connector_id` |string | The id of the channel which was subscribed |
 
 + Model (application/json)
 
             {
                 "id":"458978gh8",
                 "credentials_id":"458234kjsh8",
-                "channel_id":"dasdj213dswef"
+                "connector_id":"dasdj213dswef"
             }
 
 ### Start synching this channel subscription [POST]
@@ -2141,7 +2141,7 @@ The Channel Subscription resource contains the following attributes:
 + Request (application/json)
 
             {
-                "channel_id":"thechannelid12344",
+                "connector_id":"dasdj213dswef",
                 "credentials_id":"458234kjsh8"
             }
             
@@ -2187,12 +2187,12 @@ The Channel Subscription resource contains the following attributes:
             "channel_subscriptions":[
                 {
                     "id":"15d13650-6f65-11e4-beab-7db8ea9353f1",
-                    "channel_id":"12345abc",
+                    "connector_id":"dasdj213dswef",
                     "credentials_id":"458234kjsh8"
                 },
                 {
                     "id":"f512602b-3fe2-4942-9eb5-5bcca974a0c3",
-                    "channel_id":"45678lmnop",
+                    "connector_id":"dasdj213dswef",
                     "credentials_id":"458234kjsh8"
                 }
             ]
