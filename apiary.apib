@@ -2946,11 +2946,14 @@ The Ecom endpoints provide the means to query for information regarding the appl
 
 ### infusionpay/check [/rest/v1/ecom/infusionpay/check]
 
-A Merchant Account resource will contain the following attributes:
+Retrieve information regarding the application's InfusionPay merchant account. 
 
-- **has_ecom_plugin** : (Boolean) TRUE if the E-commerce plugin is activated from this application
-- **has_infusionpay** : (Boolean) TRUE if this application has activated an InfusionPay merchant account.
-- **client_id** : (String) If *has_infusionpay* is TRUE, this is the client id of InfusionPay account.
+
+| Attribute | Type | Description |
+| --- | --- | --- |
+| `has_ecom_plugin` | Boolean | TRUE if the E-commerce plugin is activated from this application|
+| `has_infusionpay` | Boolean | TRUE if this application has activated an InfusionPay merchant account.|
+| `client_id` | String | If *has_infusionpay* is TRUE, this is the client id of InfusionPay account.|
 
 #### Retrieve status about InfusionPay [GET] 
 Returns a json representation of the status of this application's InfusionPay status.
