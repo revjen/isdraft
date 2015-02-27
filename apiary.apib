@@ -2953,7 +2953,7 @@ Retrieve information regarding the application's InfusionPay merchant account.
 | --- | --- | --- |
 | `has_ecom_plugin` | Boolean | TRUE if the E-commerce plugin is activated from this application|
 | `has_infusionpay` | Boolean | TRUE if this application has activated an InfusionPay merchant account.|
-| `client_id` | String | If *has_infusionpay* is TRUE, this is the client id of InfusionPay account.|
+| `access_token` | String | If *has_infusionpay* is TRUE, this is the access token for the InfusionPay account.|
 
 #### Retrieve status about InfusionPay [GET] 
 Returns a json representation of the status of this application's InfusionPay status.
@@ -2967,6 +2967,6 @@ Returns a json representation of the status of this application's InfusionPay st
         { 
             "has_ecom_plugin" : "true",
             "has_infusionpay" : "true",
-            "client_id" : "1234567"
+            "access_token" : "1234567abc"
         }
       
